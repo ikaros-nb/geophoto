@@ -1,22 +1,17 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Register</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
+  <button ion-button clear color="light" menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
   <ion-item>
-    <ion-label floating>Email address</ion-label>
-    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+    <ion-label floating color="light">Email address</ion-label>
+    <ion-input type="text" class="input-color" [(ngModel)]="user.email"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+    <ion-label floating color="light">Password</ion-label>
+    <ion-input type="password" class="input-color" [(ngModel)]="user.password"></ion-input>
   </ion-item>
 
-  <button ion-button block color="light" (click)="register()">Register</button>
+  <button ion-button block color="secondary" class="register-button" (click)="register()">Register</button>
 </ion-content>
