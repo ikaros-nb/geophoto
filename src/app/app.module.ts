@@ -12,6 +12,8 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 
+import { ToastHelper } from '../helpers/toast';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -35,7 +37,8 @@ import { RegisterPage } from '../pages/register/register';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ToastHelper
   ]
 })
 export class AppModule {}

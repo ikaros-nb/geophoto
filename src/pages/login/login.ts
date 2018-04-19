@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from './../../models/user';
 import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
+import { ToastHelper } from '../../helpers/toast';
 
 @Component({
   selector: 'page-login',
@@ -16,20 +17,31 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private toast: ToastHelper
   ) {}
 
-  async login() {
-    try {
-      const result = await this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password);
-      console.log(result);
-      if (result) this.navCtrl.setRoot(HomePage)
-    } catch (err) {
-      console.error(err);
+  login() {
+    if (this.user.email && this.user.password) {
+      this.afAuth.auth
+        .signInWithEmailAndPassword(this.user.email, this.user.password)
+        .then(result => {
+          //console.log('signInWithEmailAndPassword', result);
+          this.navCtrl.setRoot(HomePage);
+        })
+        .catch(error => {
+          //console.log('error', error)
+          this.user.password = null;
+          this.toast.display(`There is no user corresponding to this credentials. The user may have been deleted.`);
+        });
+    } else {
+      this.user.email = null;
+      this.user.password = null;
+      this.toast.display(`Email and password must not be empty.`);
     }
   }
 
   register() {
-    this.navCtrl.push(RegisterPage);
+    this.navCtrl.setRoot(RegisterPage);
   }
 }
