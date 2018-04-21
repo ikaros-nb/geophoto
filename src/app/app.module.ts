@@ -12,6 +12,9 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { AccountPage } from './../pages/account/account';
+import { AccountInfoPage } from '../pages/account-info/account-info';
+import { AccountPhotosPage } from '../pages/account-photos/account-photos';
 
 import { ToastHelper } from '../helpers/toast';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -22,7 +25,10 @@ import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
     MyApp,
     HomePage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    AccountPage,
+    AccountInfoPage,
+    AccountPhotosPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +42,10 @@ import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
     MyApp,
     HomePage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    AccountPage,
+    AccountInfoPage,
+    AccountPhotosPage
   ],
   providers: [
     StatusBar,

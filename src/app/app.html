@@ -9,6 +9,7 @@
                 <ion-icon *ngIf="p.title == 'Home'" name="home"></ion-icon>
                 <ion-icon *ngIf="p.title == 'Login'" name="log-in"></ion-icon>
                 <ion-icon *ngIf="p.title == 'Register'" name="person-add"></ion-icon>
+                <ion-icon *ngIf="p.title == 'Account'" name="person"></ion-icon>
                 {{p.title}}
             </button>
             <button menuClose *ngIf="pseudo" ion-item class="menu-button" (click)="logout()">

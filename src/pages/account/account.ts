@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AccountInfoPage } from '../account-info/account-info';
+import { AccountPhotosPage } from '../account-photos/account-photos';
 
 @Component({
   selector: 'page-account',
-  templateUrl: 'account.html',
+  templateUrl: 'account.html'
 })
 export class AccountPage {
+  tab1Root = AccountInfoPage;
+  tab2Root = AccountPhotosPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AccountPage');
-  }
-
+  constructor() {}
 }

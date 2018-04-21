@@ -7,6 +7,7 @@ import firebase from 'firebase';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from './../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { AccountPage } from '../pages/account/account';
 import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
 import { ToastHelper } from '../helpers/toast';
 import { User } from '../models/user';
@@ -61,7 +62,6 @@ export class MyApp {
           .child(user.uid)
           .once('value')
           .then(data => {
-            console.log(data);
             this.user.uid = user.uid;
             this.user.pseudo = this.pseudo = data.val().pseudo;
             this.user.email = data.val().email;
@@ -86,7 +86,10 @@ export class MyApp {
         { title: 'Register', component: RegisterPage }
       ];
     } else {
-      this.pages = [{ title: 'Home', component: HomePage }];
+      this.pages = [
+        { title: 'Home', component: HomePage },
+        { title: 'Account', component: AccountPage }
+      ];
     }
   }
 
