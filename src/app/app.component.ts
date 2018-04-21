@@ -1,13 +1,15 @@
-import { Component, ViewChild } from "@angular/core";
-import { Nav, Platform } from "ionic-angular";
-import { StatusBar } from "@ionic-native/status-bar";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import { AngularFireAuth } from "angularfire2/auth";
-
-import { HomePage } from "../pages/home/home";
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { AngularFireAuth } from 'angularfire2/auth';
+import firebase from 'firebase';
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from './../pages/login/login';
-import { RegisterPage } from "../pages/register/register";
-import { ToastHelper } from "../helpers/toast";
+import { RegisterPage } from '../pages/register/register';
+import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
+import { ToastHelper } from '../helpers/toast';
+import { User } from '../models/user';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,13 +19,15 @@ export class MyApp {
 
   rootPage: any = HomePage;
   pages: Array<{ title: string; component: any }>;
-  email: string;
+  pseudo: string;
+  user = {} as User;
   isLogged: boolean;
 
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
+    private fireAuth: FireAuthProvider,
     private afAuth: AngularFireAuth,
     private toast: ToastHelper
   ) {
@@ -47,18 +51,29 @@ export class MyApp {
   }
 
   authState() {
-    this.afAuth.authState.subscribe(data => {
-      //console.log('data', data);
+    this.afAuth.authState.subscribe(user => {
+      if (user && user.email && user.uid) {
 
-      if (data && data.email && data.uid) {
-        this.email = data.email;
+
+        firebase
+          .database()
+          .ref(`users/`)
+          .child(user.uid)
+          .once('value')
+          .then(data => {
+            console.log(data);
+            this.user.uid = user.uid;
+            this.user.pseudo = this.pseudo = data.val().pseudo;
+            this.user.email = data.val().email;
+            this.fireAuth.setUserSession(this.user);
+          });
+
         this.isLogged = true;
-        this.toast.display(`Welcome to GeoPhoto, ${data.email}`);
+        this.toast.display(`Welcome to GeoPhoto, ${user.email}`);
       } else {
         this.isLogged = false;
         this.toast.display(`Could not find authentication details.`);
       }
-
       this.setPages();
     });
   }
@@ -71,14 +86,12 @@ export class MyApp {
         { title: 'Register', component: RegisterPage }
       ];
     } else {
-      this.pages = [
-        { title: 'Home', component: HomePage }
-      ];
+      this.pages = [{ title: 'Home', component: HomePage }];
     }
   }
 
   logout() {
-    this.email = null;
-    this.afAuth.auth.signOut();
+    this.pseudo = null;
+    this.fireAuth.logout();
   }
 }

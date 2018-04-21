@@ -8,9 +8,14 @@ ion-content {
 
   .menu-title {
       text-align: center;
+      margin-bottom: 40px;
   }
 
   .menu-button {
     color: #f4f4f4;
+  }
+
+  ion-icon {
+    margin: 0 10px;
   }
 }

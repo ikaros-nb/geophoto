@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { FIREBASE_CONFIG } from './app.firebase.config';
@@ -13,6 +14,8 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 
 import { ToastHelper } from '../helpers/toast';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { ToastHelper } from '../helpers/toast';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,7 +42,9 @@ import { ToastHelper } from '../helpers/toast';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ToastHelper
+    ToastHelper,
+    Camera,
+    FireAuthProvider
   ]
 })
 export class AppModule {}

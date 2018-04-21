@@ -1,14 +1,20 @@
 <ion-menu [content]="content">
     <ion-content>
         <ion-item no-lines>
-            <ion-label color="light" class="menu-title">{{email || 'Menu'}}</ion-label>
+            <ion-label color="light" class="menu-title">{{user.pseudo ? '@' + pseudo : 'Menu'}}</ion-label>
         </ion-item>
 
         <ion-list no-lines>
             <button menuClose ion-item class="menu-button" *ngFor="let p of pages" (click)="openPage(p)">
+                <ion-icon *ngIf="p.title == 'Home'" name="home"></ion-icon>
+                <ion-icon *ngIf="p.title == 'Login'" name="log-in"></ion-icon>
+                <ion-icon *ngIf="p.title == 'Register'" name="person-add"></ion-icon>
                 {{p.title}}
             </button>
-            <button menuClose *ngIf="email" ion-item class="menu-button" (click)="logout()">Logout</button>
+            <button menuClose *ngIf="pseudo" ion-item class="menu-button" (click)="logout()">
+                <ion-icon name="log-out"></ion-icon>
+                Logout
+            </button>
         </ion-list>
     </ion-content>
 </ion-menu>

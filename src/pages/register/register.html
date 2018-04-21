@@ -4,6 +4,11 @@
   </button>
 
   <ion-item>
+    <ion-label floating color="light">Pseudo</ion-label>
+    <ion-input type="text" class="input-color" [(ngModel)]="user.pseudo"></ion-input>
+  </ion-item>
+
+  <ion-item>
     <ion-label floating color="light">Email address</ion-label>
     <ion-input type="text" class="input-color" [(ngModel)]="user.email"></ion-input>
   </ion-item>
@@ -13,5 +18,5 @@
     <ion-input type="password" class="input-color" [(ngModel)]="user.password"></ion-input>
   </ion-item>
 
-  <button ion-button block color="secondary" class="register-button" (click)="register()">Register</button>
+  <button ion-button block color="danger" class="register-button" (click)="register()">Register</button>
 </ion-content>
