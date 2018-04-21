@@ -15,6 +15,7 @@ import { RegisterPage } from '../pages/register/register';
 import { AccountPage } from './../pages/account/account';
 import { AccountInfoPage } from '../pages/account-info/account-info';
 import { AccountPhotosPage } from '../pages/account-photos/account-photos';
+import { PhotoInfoPage } from '../pages/photo-info/photo-info';
 
 import { ToastHelper } from '../helpers/toast';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -28,7 +29,8 @@ import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
     RegisterPage,
     AccountPage,
     AccountInfoPage,
-    AccountPhotosPage
+    AccountPhotosPage,
+    PhotoInfoPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
     RegisterPage,
     AccountPage,
     AccountInfoPage,
-    AccountPhotosPage
+    AccountPhotosPage,
+    PhotoInfoPage
   ],
   providers: [
     StatusBar,

@@ -4,4 +4,32 @@
   </button>
 
   <h2>Photos</h2>
+
+  <ion-card *ngFor="let photo of photos?.slice().reverse()">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{photo.user.avatarURL}}">
+      </ion-avatar>
+      <h2>{{photo.user.pseudo}}</h2>
+      <p>{{photo.createdAt | date : 'MMMM d, y - HH:mm:s'}}</p>
+    </ion-item>
+
+    <img src="{{photo.pictureURL}}">
+
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
