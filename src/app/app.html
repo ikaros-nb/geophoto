@@ -1,7 +1,7 @@
 <ion-menu [content]="content">
     <ion-content>
         <ion-item no-lines>
-            <ion-label color="light" class="menu-title">{{user.pseudo ? '@' + pseudo : 'Menu'}}</ion-label>
+            <ion-label color="light" class="menu-title">{{user.pseudo ? '@' + user.pseudo : 'Menu'}}</ion-label>
         </ion-item>
 
         <ion-list no-lines>
@@ -12,7 +12,7 @@
                 <ion-icon *ngIf="p.title == 'Account'" name="person"></ion-icon>
                 {{p.title}}
             </button>
-            <button menuClose *ngIf="pseudo" ion-item class="menu-button" (click)="logout()">
+            <button menuClose *ngIf="user.pseudo" ion-item class="menu-button" (click)="logout()">
                 <ion-icon name="log-out"></ion-icon>
                 Logout
             </button>

@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import firebase from 'firebase';
+import { PhotoInfoPage } from './../photo-info/photo-info';
 
 @Component({
   selector: 'page-account-photos',
@@ -31,5 +32,9 @@ export class AccountPhotosPage {
         return false;
       });
     });
+  }
+
+  goToPhotoInfo(photo) {
+    this.navCtrl.push(PhotoInfoPage, { photo });
   }
 }

@@ -14,7 +14,7 @@
       <p>{{photo.createdAt | date : 'MMMM d, y - HH:mm:s'}}</p>
     </ion-item>
 
-    <img src="{{photo.pictureURL}}">
+    <img src="{{photo.pictureURL}}" (click)="goToPhotoInfo(photo)">
 
     <ion-row>
       <ion-col>

@@ -3,7 +3,16 @@
     <ion-icon name="menu"></ion-icon>
   </button>
 
-  <button ion-button outline block color="light" (click)="takePicture()">YOU KNOW NOTHING</button>
+  <ion-fab bottom right *ngIf="user.pseudo">
+    <button ion-fab color="secondary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="danger" (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 
   <ion-card *ngFor="let photo of photos?.slice().reverse()">
     <ion-item>
@@ -14,7 +23,7 @@
       <p>{{photo.createdAt | date : 'MMMM d, y - HH:mm:s'}}</p>
     </ion-item>
 
-    <img src="{{photo.pictureURL}}">
+    <img src="{{photo.pictureURL}}" (click)="goToPhotoInfo(photo)">
 
     <ion-row>
       <ion-col>

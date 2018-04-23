@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -20,9 +20,9 @@ export class MyApp {
 
   rootPage: any = HomePage;
   pages: Array<{ title: string; component: any }>;
-  pseudo: string;
   user = {} as User;
   isLogged: boolean;
+  loading: any;
 
   constructor(
     public platform: Platform,
@@ -30,10 +30,17 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private fireAuth: FireAuthProvider,
     private afAuth: AngularFireAuth,
-    private toast: ToastHelper
+    private toast: ToastHelper,
+    public loadingCtrl: LoadingController
   ) {
     this.initializeApp();
     this.authState();
+
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    this.loading.present();
   }
 
   initializeApp() {
@@ -63,7 +70,7 @@ export class MyApp {
           .once('value')
           .then(data => {
             this.user.uid = user.uid;
-            this.user.pseudo = this.pseudo = data.val().pseudo;
+            this.user.pseudo = data.val().pseudo;
             this.user.email = data.val().email;
             this.fireAuth.setUserSession(this.user);
           });
@@ -91,10 +98,11 @@ export class MyApp {
         { title: 'Account', component: AccountPage }
       ];
     }
+    this.loading.dismiss();
   }
 
   logout() {
-    this.pseudo = null;
+    this.user = null;
     this.fireAuth.logout();
   }
 }
