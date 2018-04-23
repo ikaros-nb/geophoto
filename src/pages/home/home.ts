@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, FabContainer } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Observable } from 'rxjs/Observable';
 import firebase from 'firebase';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { PhotoInfoPage } from '../photo-info/photo-info';
 import { User } from '../../models/user';
 
@@ -19,11 +21,27 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
+    private afAuth: AngularFireAuth,
     private camera: Camera
   ) {}
 
   ionViewDidLoad() {
-    this.user = this.fireAuth.getUserSession();
+    this.afAuth.authState.subscribe(user => {
+      if (user && user.email && user.uid) {
+        firebase
+          .database()
+          .ref(`users/`)
+          .child(user.uid)
+          .once('value')
+          .then(data => {
+            this.user.uid = user.uid;
+            this.user.pseudo = data.val().pseudo;
+            this.user.email = data.val().email;
+            this.user.avatarURL = data.val().avatarURL;
+            this.fireAuth.setUserSession(this.user);
+          });
+      }
+    });
 
     this.photosRef.orderByChild('createdAt').on('value', itemSnapshot => {
       this.photos = [];
@@ -66,6 +84,7 @@ export class HomePage {
               createdAt: currentDate.toJSON(),
               pictureURL: savedPicture.downloadURL,
               user: {
+                avatarURL: this.fireAuth.getUserSession().avatarURL,
                 pseudo: this.fireAuth.getUserSession().pseudo,
                 userID: this.user.uid
               }

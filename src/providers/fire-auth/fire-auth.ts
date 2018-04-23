@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import firebase from 'firebase';
-import { User } from '../../models/user';
+import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "angularfire2/auth";
+import firebase from "firebase";
+import { User } from "../../models/user";
 
 @Injectable()
 export class FireAuthProvider {
@@ -31,10 +31,13 @@ export class FireAuthProvider {
   }
 
   public addUserRefInFirebase(user: User) {
+    let avatarURL: string =
+      "https://firebasestorage.googleapis.com/v0/b/geophoto-ocp10.appspot.com/o/users%2Fuser-0.png?alt=media&token=e2af5e42-8a2e-4783-9853-d945ec4e5b95";
     this.usersRef.child(user.uid).set({
-      pseudo: user.pseudo,
+      avatarURL: avatarURL,
+      createdAt: new Date().toJSON(),
       email: user.email,
-      createdAt: new Date().toJSON()
+      pseudo: user.pseudo
     });
   }
 

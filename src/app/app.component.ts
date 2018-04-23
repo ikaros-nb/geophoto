@@ -31,7 +31,7 @@ export class MyApp {
     private fireAuth: FireAuthProvider,
     private afAuth: AngularFireAuth,
     private toast: ToastHelper,
-    public loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController
   ) {
     this.initializeApp();
     this.authState();
@@ -72,6 +72,7 @@ export class MyApp {
             this.user.uid = user.uid;
             this.user.pseudo = data.val().pseudo;
             this.user.email = data.val().email;
+            this.user.avatarURL = data.val().avatarURL;
             this.fireAuth.setUserSession(this.user);
           });
 
@@ -102,7 +103,10 @@ export class MyApp {
   }
 
   logout() {
-    this.user = {} as User;
     this.fireAuth.logout();
+    this.user = {} as User;
+    this.isLogged = false;
+    this.setPages();
+    this.nav.setRoot(HomePage);
   }
 }

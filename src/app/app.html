@@ -1,7 +1,10 @@
 <ion-menu [content]="content">
     <ion-content>
-        <ion-item no-lines>
-            <ion-label color="light" class="menu-title">{{user.pseudo ? '@' + user.pseudo : 'Menu'}}</ion-label>
+        <ion-item no-lines class="user-avatar" *ngIf="user.avatarURL">
+            <img src="{{user.avatarURL}}">
+        </ion-item>
+        <ion-item no-lines *ngIf="user.pseudo">
+            <ion-label color="light" class="user-pseudo">{{'@' + user.pseudo}}</ion-label>
         </ion-item>
 
         <ion-list no-lines>

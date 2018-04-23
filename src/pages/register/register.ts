@@ -12,7 +12,6 @@ import { ToastHelper } from '../../helpers/toast';
 })
 export class RegisterPage {
   user = {} as User;
-  usersRef: firebase.database.Reference = firebase.database().ref(`users`);
 
   constructor(
     public navCtrl: NavController,

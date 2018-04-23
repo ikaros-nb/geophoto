@@ -6,16 +6,37 @@ ion-content {
     background: none;
   }
 
-  .menu-title {
-      text-align: center;
-      margin-bottom: 40px;
+  .user-avatar {
+    text-align: center;
+
+    ion-label {
+      margin-top: 26px;
+      margin-right: 0;
+      margin-bottom: 0;
+
+      img {
+        border-radius: 50%;
+        width: 90px;
+        height: 90px;
+      }
+    }
   }
 
-  .menu-button {
-    color: #f4f4f4;
+  .user-pseudo {
+    text-align: center;
+    margin-top: 0;
   }
 
-  ion-icon {
-    margin: 0 10px;
+  .list-md,
+  .list-ios {
+    margin-top: 20px;
+
+    .menu-button {
+      color: #f4f4f4;
+
+      ion-icon {
+        margin: 0 10px;
+      }
+    }
   }
 }
