@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, FabContainer } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
@@ -38,7 +38,9 @@ export class HomePage {
     this.navCtrl.push(PhotoInfoPage, { photo });
   }
 
-  takePicture() {
+  takePicture(fab: FabContainer) {
+    fab.close();
+
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,

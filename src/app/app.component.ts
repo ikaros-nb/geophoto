@@ -102,7 +102,7 @@ export class MyApp {
   }
 
   logout() {
-    this.user = null;
+    this.user = {} as User;
     this.fireAuth.logout();
   }
 }

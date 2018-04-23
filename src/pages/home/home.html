@@ -3,12 +3,12 @@
     <ion-icon name="menu"></ion-icon>
   </button>
 
-  <ion-fab bottom right *ngIf="user.pseudo">
+  <ion-fab bottom right *ngIf="user.pseudo" #fab>
     <button ion-fab color="secondary">
       <ion-icon name="add"></ion-icon>
     </button>
     <ion-fab-list side="top">
-      <button ion-fab color="danger" (click)="takePicture()">
+      <button ion-fab color="danger" (click)="takePicture(fab)">
         <ion-icon name="camera"></ion-icon>
       </button>
     </ion-fab-list>
