@@ -5,6 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFireDatabaseModule } from "angularfire2/database";
 import { Camera } from "@ionic-native/camera";
 
 import { MyApp } from "./app.component";
@@ -18,7 +19,6 @@ import { AccountPhotosPage } from "../pages/account-photos/account-photos";
 import { PhotoInfoPage } from "../pages/photo-info/photo-info";
 
 import { ToastHelper } from "../helpers/toast";
-import { AngularFireDatabaseModule } from "angularfire2/database";
 import { FireAuthProvider } from "../providers/fire-auth/fire-auth";
 
 @NgModule({

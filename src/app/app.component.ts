@@ -2,8 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AngularFireAuth } from 'angularfire2/auth';
-import firebase from 'firebase';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from './../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
@@ -29,18 +27,12 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private fireAuth: FireAuthProvider,
-    private afAuth: AngularFireAuth,
     private toast: ToastHelper,
     private loadingCtrl: LoadingController
   ) {
     this.initializeApp();
+    this.presentLoading();
     this.authState();
-
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
-    this.loading.present();
   }
 
   initializeApp() {
@@ -58,24 +50,19 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
+  presentLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+  }
+
   authState() {
-    this.afAuth.authState.subscribe(user => {
+    this.fireAuth.getAuthState().subscribe(user => {
       if (user && user.email && user.uid) {
-
-
-        firebase
-          .database()
-          .ref(`users/`)
-          .child(user.uid)
-          .once('value')
-          .then(data => {
-            this.user.uid = user.uid;
-            this.user.pseudo = data.val().pseudo;
-            this.user.email = data.val().email;
-            this.user.avatarURL = data.val().avatarURL;
-            this.fireAuth.setUserSession(this.user);
-          });
-
+        this.fireAuth
+          .getUserRefInFirebase(user)
+          .subscribe(() => (this.user = this.fireAuth.getUserSession()));
         this.isLogged = true;
         this.toast.display(`Welcome to GeoPhoto, ${user.email}`);
       } else {

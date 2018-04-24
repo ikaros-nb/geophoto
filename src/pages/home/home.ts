@@ -4,7 +4,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Observable } from 'rxjs/Observable';
 import firebase from 'firebase';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { PhotoInfoPage } from '../photo-info/photo-info';
 import { User } from '../../models/user';
 
@@ -21,25 +20,15 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
-    private afAuth: AngularFireAuth,
     private camera: Camera
   ) {}
 
   ionViewDidLoad() {
-    this.afAuth.authState.subscribe(user => {
+    this.fireAuth.getAuthState().subscribe(user => {
       if (user && user.email && user.uid) {
-        firebase
-          .database()
-          .ref(`users/`)
-          .child(user.uid)
-          .once('value')
-          .then(data => {
-            this.user.uid = user.uid;
-            this.user.pseudo = data.val().pseudo;
-            this.user.email = data.val().email;
-            this.user.avatarURL = data.val().avatarURL;
-            this.fireAuth.setUserSession(this.user);
-          });
+        this.fireAuth
+          .getUserRefInFirebase(user)
+          .subscribe(() => (this.user = this.fireAuth.getUserSession()));
       }
     });
 
