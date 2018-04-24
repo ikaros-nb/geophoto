@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
+import { Photo } from '../../models/photo';
+import { Observable } from 'rxjs/Observable';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
-import firebase from 'firebase';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { PhotoInfoPage } from './../photo-info/photo-info';
 
 @Component({
@@ -11,27 +13,23 @@ import { PhotoInfoPage } from './../photo-info/photo-info';
 })
 export class AccountPhotosPage {
   user = {} as User;
-  photosRef: firebase.database.Reference = firebase.database().ref(`photos`);
-  photos: Array<any> = [];
+  photosRef: AngularFireList<Photo> = this.afDB.list(`photos`, ref =>
+    ref.orderByChild('createdAt')
+  );
+  photos: Observable<Photo[]>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private fireAuth: FireAuthProvider
+    private fireAuth: FireAuthProvider,
+    private afDB: AngularFireDatabase
   ) {
     this.user = this.fireAuth.getUserSession();
-  }
-
-  ionViewDidLoad() {
-    this.photosRef.orderByChild('createdAt').on('value', itemSnapshot => {
-      this.photos = [];
-      itemSnapshot.forEach(itemSnap => {
-        if (itemSnap.val().user.userID == this.user.uid) {
-          this.photos.push(itemSnap.val());
-        }
-        return false;
-      });
-    });
+    this.photos = this.photosRef
+      .valueChanges()
+      .map(photos =>
+        photos.reverse().filter(photo => photo.user.uid == this.user.uid)
+      );
   }
 
   goToPhotoInfo(photo) {

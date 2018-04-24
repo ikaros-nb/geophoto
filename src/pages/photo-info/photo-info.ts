@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { Photo } from '../../models/photo';
 
 @Component({
   selector: 'page-photo-info',
   templateUrl: 'photo-info.html'
 })
 export class PhotoInfoPage {
-  photo: any;
+  photo = {} as Photo;
 
   constructor(
     public navCtrl: NavController,

@@ -4,24 +4,31 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Observable } from 'rxjs/Observable';
 import firebase from 'firebase';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { PhotoInfoPage } from '../photo-info/photo-info';
 import { User } from '../../models/user';
+import { Photo } from '../../models/photo';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  photosRef: firebase.database.Reference = firebase.database().ref(`photos`);
-  photos: Array<any> = [];
+  photosRef: AngularFireList<Photo> = this.afDB.list(`photos`, ref =>
+    ref.orderByChild('createdAt')
+  );
+  photos: Observable<Photo[]>;
   user = {} as User;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
+    private afDB: AngularFireDatabase,
     private camera: Camera
-  ) {}
+  ) {
+    this.photos = this.photosRef.valueChanges().map(photos => photos.reverse());
+  }
 
   ionViewDidLoad() {
     this.fireAuth.getAuthState().subscribe(user => {
@@ -30,14 +37,6 @@ export class HomePage {
           .getUserRefInFirebase(user)
           .subscribe(() => (this.user = this.fireAuth.getUserSession()));
       }
-    });
-
-    this.photosRef.orderByChild('createdAt').on('value', itemSnapshot => {
-      this.photos = [];
-      itemSnapshot.forEach(itemSnap => {
-        this.photos.push(itemSnap.val());
-        return false;
-      });
     });
   }
 
@@ -75,7 +74,7 @@ export class HomePage {
               user: {
                 avatarURL: this.fireAuth.getUserSession().avatarURL,
                 pseudo: this.fireAuth.getUserSession().pseudo,
-                userID: this.user.uid
+                uid: this.user.uid
               }
             });
           });

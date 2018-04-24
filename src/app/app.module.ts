@@ -5,7 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
-import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 import { Camera } from "@ionic-native/camera";
 
 import { MyApp } from "./app.component";
@@ -56,6 +56,7 @@ import { FireAuthProvider } from "../providers/fire-auth/fire-auth";
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ToastHelper,
     Camera,
+    AngularFireDatabase,
     FireAuthProvider
   ]
 })

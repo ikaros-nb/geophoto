@@ -14,7 +14,7 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-card *ngFor="let photo of photos?.slice().reverse()">
+  <ion-card *ngFor="let photo of photos | async">
     <ion-item>
       <ion-avatar item-start>
         <img src="{{photo.user.avatarURL}}">
