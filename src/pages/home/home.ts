@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, FabContainer } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Observable } from 'rxjs/Observable';
-import firebase from 'firebase';
-import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PhotoInfoPage } from '../photo-info/photo-info';
+import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
+import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
 import { User } from '../../models/user';
 import { Photo } from '../../models/photo';
 
@@ -14,9 +13,6 @@ import { Photo } from '../../models/photo';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  photosRef: AngularFireList<Photo> = this.afDB.list(`photos`, ref =>
-    ref.orderByChild('createdAt')
-  );
   photos: Observable<Photo[]>;
   user = {} as User;
 
@@ -24,10 +20,13 @@ export class HomePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
-    private afDB: AngularFireDatabase,
+    private firePhoto: FirePhotoProvider,
     private camera: Camera
   ) {
-    this.photos = this.photosRef.valueChanges().map(photos => photos.reverse());
+    this.photos = this.firePhoto
+      .listAllFromFirebase()
+      .valueChanges()
+      .map(photos => photos.reverse());
   }
 
   ionViewDidLoad() {
@@ -60,25 +59,7 @@ export class HomePage {
 
     this.camera
       .getPicture(options)
-      .then(picture => {
-        const currentDate = new Date();
-        const selfieRef = firebase
-          .storage()
-          .ref(`photos/${this.user.uid}/photo-${currentDate.getTime()}.jpg`);
-        selfieRef
-          .putString(picture, 'base64', { contentType: 'image/jpeg' })
-          .then(savedPicture => {
-            this.photosRef.push({
-              createdAt: currentDate.toJSON(),
-              pictureURL: savedPicture.downloadURL,
-              user: {
-                avatarURL: this.fireAuth.getUserSession().avatarURL,
-                pseudo: this.fireAuth.getUserSession().pseudo,
-                uid: this.user.uid
-              }
-            });
-          });
-      })
+      .then(picture => this.firePhoto.addPhotoInFirebase(picture))
       .catch(error => console.log('error', error));
   }
 }

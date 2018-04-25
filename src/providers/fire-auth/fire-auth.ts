@@ -7,11 +7,11 @@ import { User } from '../../models/user';
 @Injectable()
 export class FireAuthProvider {
   private userSession = {} as User;
-  private usersRef: firebase.database.Reference = firebase
-    .database()
-    .ref(`users`);
+  private usersRef: firebase.database.Reference;
 
-  constructor(private afAuth: AngularFireAuth) {}
+  constructor(private afAuth: AngularFireAuth) {
+    this.usersRef = firebase.database().ref(`users`);
+  }
 
   public register(user: User) {
     return this.afAuth.auth.createUserWithEmailAndPassword(

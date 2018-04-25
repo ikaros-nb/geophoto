@@ -20,6 +20,7 @@ import { PhotoInfoPage } from "../pages/photo-info/photo-info";
 
 import { ToastHelper } from "../helpers/toast";
 import { FireAuthProvider } from "../providers/fire-auth/fire-auth";
+import { FirePhotoProvider } from '../providers/fire-photo/fire-photo';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { FireAuthProvider } from "../providers/fire-auth/fire-auth";
     ToastHelper,
     Camera,
     AngularFireDatabase,
-    FireAuthProvider
+    FireAuthProvider,
+    FirePhotoProvider
   ]
 })
 export class AppModule {}
