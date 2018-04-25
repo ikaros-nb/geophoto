@@ -30,26 +30,44 @@ export class FirePhotoProvider {
   }
 
   public addPhotoInFirebase(picture: string) {
-    const currentDate = new Date();
+    const timestamp = new Date().getTime();
+    const pictureName = `photo-${this.user.uid}-${timestamp}.jpg`;
     const photoRef = firebase
       .storage()
-      .ref(`photos/${this.user.uid}/photo-${currentDate.getTime()}.jpg`);
+      .ref(`photos/${this.user.uid}/${pictureName}`);
 
     photoRef
       .putString(picture, 'base64', { contentType: 'image/jpeg' })
       .then(savedPicture => {
+        let metadata = {
+          customMetadata: {
+            title: 'My super capture!',
+            location: 'Yosemite, CA, USA'
+          }
+        };
+        photoRef.updateMetadata(metadata);
+
         firebase
           .database()
           .ref(`photos`)
           .push({
-            createdAt: currentDate.toJSON(),
+            name: savedPicture.metadata.name,
             pictureURL: savedPicture.downloadURL,
+            createdAt: savedPicture.metadata.timeCreated,
             user: {
-              avatarURL: this.fireAuth.getUserSession().avatarURL,
+              uid: this.user.uid,
               pseudo: this.fireAuth.getUserSession().pseudo,
-              uid: this.user.uid
+              avatarURL: this.fireAuth.getUserSession().avatarURL
             }
           });
       });
+  }
+
+  public getPhotoMetadataInFirebase(photo: Photo) {
+    const photoRef = firebase
+      .storage()
+      .ref(`photos/${photo.user.uid}/${photo.name}`);
+
+    return photoRef.getMetadata();
   }
 }

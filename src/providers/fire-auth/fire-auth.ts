@@ -54,10 +54,10 @@ export class FireAuthProvider {
     let avatarURL: string =
       'https://firebasestorage.googleapis.com/v0/b/geophoto-ocp10.appspot.com/o/users%2Fuser-0.png?alt=media&token=e2af5e42-8a2e-4783-9853-d945ec4e5b95';
     this.usersRef.child(user.uid).set({
-      avatarURL: avatarURL,
-      createdAt: new Date().toJSON(),
+      pseudo: user.pseudo,
       email: user.email,
-      pseudo: user.pseudo
+      avatarURL: avatarURL,
+      createdAt: new Date().toJSON()
     });
   }
 

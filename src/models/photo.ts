@@ -1,7 +1,8 @@
 import { User } from "./user";
 
 export interface Photo {
-    createdAt: string;
+    name: string;
     pictureURL: string;
+    createdAt: string;
     user: User;
 }
