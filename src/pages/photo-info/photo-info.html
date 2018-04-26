@@ -14,45 +14,33 @@
 
     <img src="{{photo.pictureURL}}">
 
-    <ion-row *ngIf="!input">
-      <ion-col>
-        <button ion-button *ngIf="user.uid == photo.user.uid" (click)="deletePhoto()">
+    <ion-item>
+      <ion-buttons end>
+        <button ion-button small color="primary" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="showInput()">
+          <ion-icon name="create"></ion-icon>
+          EDIT
+        </button>
+        <button ion-button small color="secondary" icon-left *ngIf="input" (click)="updateMetadata()">
+          <ion-icon name="checkmark"></ion-icon>
+          UPDATE
+        </button>
+        <button ion-button small color="danger" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="deletePhoto()">
           <ion-icon name="close"></ion-icon>
-          Delete photo
+          DELETE
         </button>
-      </ion-col>
-    </ion-row>
+      </ion-buttons>
+    </ion-item>
 
-    <ion-row *ngIf="!input">
-      <ion-col>
-        <ion-item>
-          <ion-label>{{photo.metadata?.title}}</ion-label>
-        </ion-item>
-        <button ion-button clear color="primary" *ngIf="user.uid == photo.user.uid" (click)="showInput()">
-          <ion-icon name="create"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
+    <ion-item *ngIf="!input">
+      <ion-label>{{photo.metadata?.title}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="input">
+      <ion-input [(ngModel)]="photo.metadata.title"></ion-input>
+    </ion-item>
 
-    <ion-row *ngIf="input">
-      <ion-col>
-        <ion-item>
-          <ion-input [(ngModel)]="photo.metadata.title"></ion-input>
-        </ion-item>
-        <button ion-button (click)="updateMetadata()">
-          <ion-icon name="create"></ion-icon>
-          Validate
-        </button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>{{photo.metadata?.location}}</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    <ion-item>
+      <ion-label>{{photo.metadata?.location}}</ion-label>
+    </ion-item>
 
     <ion-row>
       <ion-col>
