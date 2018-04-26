@@ -16,17 +16,21 @@
 
     <ion-item>
       <ion-buttons end>
-        <button ion-button small color="primary" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="showInput()">
+        <button ion-button outline small color="primary" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="showInput()">
           <ion-icon name="create"></ion-icon>
           EDIT
         </button>
-        <button ion-button small color="secondary" icon-left *ngIf="input" (click)="updateMetadata()">
+        <button ion-button outline small color="danger" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="deletePhoto()">
+          <ion-icon name="close"></ion-icon>
+          DELETE
+        </button>
+        <button ion-button outline small color="secondary" icon-left *ngIf="input" (click)="updateMetadata()">
           <ion-icon name="checkmark"></ion-icon>
           UPDATE
         </button>
-        <button ion-button small color="danger" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="deletePhoto()">
+        <button ion-button outline small color="danger" icon-left *ngIf="input" (click)="showInput()">
           <ion-icon name="close"></ion-icon>
-          DELETE
+          CANCEL
         </button>
       </ion-buttons>
     </ion-item>
@@ -44,7 +48,7 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button ion-button icon-left clear small color="{{like ? 'secondary' : 'primary'}}" (click)="favorites()">
           <ion-icon name="thumbs-up"></ion-icon>
           <div>12 Likes</div>
         </button>

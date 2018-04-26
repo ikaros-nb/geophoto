@@ -14,6 +14,7 @@ export class PhotoInfoPage {
   photo = {} as Photo;
   user = {} as User;
   input: boolean;
+  like: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -32,6 +33,7 @@ export class PhotoInfoPage {
   ionViewDidEnter() {
     this.menuCtrl.swipeEnable(false);
     this.user = this.fireAuth.getUserSession();
+    this.getFavPhoto();
   }
 
   ionViewWillLeave() {
@@ -39,7 +41,7 @@ export class PhotoInfoPage {
   }
 
   showInput() {
-    this.input = true;
+    this.input = !this.input;
   }
 
   deletePhoto() {
@@ -62,5 +64,17 @@ export class PhotoInfoPage {
       .updatePhotoMetadataInFirebase(this.photo)
       .then(() => (this.input = false))
       .catch(error => console.log('error', error));
+  }
+
+  getFavPhoto() {
+    this.db.getFavPhoto(this.photo).subscribe(favPhoto => {
+      if (favPhoto) this.like = true;
+      else this.like = false;
+    });
+  }
+
+  favorites() {
+    this.like = !this.like;
+    this.db.toFavPhoto(this.photo).subscribe();
   }
 }
