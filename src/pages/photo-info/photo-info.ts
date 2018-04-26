@@ -40,6 +40,13 @@ export class PhotoInfoPage {
     this.input = true;
   }
 
+  deletePhoto() {
+    this.firePhoto
+      .deletePhotoInStorage(this.photo)
+      .then(() => this.firePhoto.deletePhotoInFirebase())
+      .catch(error => console.log('error', error));
+  }
+
   updateMetadata() {
     this.firePhoto
       .updatePhotoMetadataInFirebase(this.photo)

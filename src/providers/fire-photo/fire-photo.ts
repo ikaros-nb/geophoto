@@ -63,6 +63,16 @@ export class FirePhotoProvider {
       });
   }
 
+  public deletePhotoInStorage(photo: Photo) {
+    const photoRef = firebase
+      .storage()
+      .ref(`photos/${photo.user.uid}/${photo.name}`);
+
+    return photoRef.delete();
+  }
+
+  public deletePhotoInFirebase() {}
+
   public getPhotoMetadataInFirebase(photo: Photo) {
     const photoRef = firebase
       .storage()
