@@ -4,6 +4,7 @@ import { Photo } from '../../models/photo';
 import { User } from './../../models/user';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
+import { DatabaseProvider } from '../../providers/database/database';
 
 @Component({
   selector: 'page-photo-info',
@@ -19,7 +20,8 @@ export class PhotoInfoPage {
     public navParams: NavParams,
     private menuCtrl: MenuController,
     private fireAuth: FireAuthProvider,
-    private firePhoto: FirePhotoProvider
+    private firePhoto: FirePhotoProvider,
+    private db: DatabaseProvider
   ) {
     this.photo = this.navParams.get('photo');
     this.firePhoto

@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PhotoInfoPage } from '../photo-info/photo-info';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
+import { DatabaseProvider } from './../../providers/database/database';
 import { User } from '../../models/user';
 import { Photo } from '../../models/photo';
 
@@ -21,6 +22,7 @@ export class HomePage {
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
+    private db: DatabaseProvider,
     private camera: Camera
   ) {
     this.photos = this.firePhoto
@@ -32,9 +34,10 @@ export class HomePage {
   ionViewDidLoad() {
     this.fireAuth.getAuthState().subscribe(user => {
       if (user && user.email && user.uid) {
-        this.fireAuth
-          .getUserRefInFirebase(user)
-          .subscribe(() => (this.user = this.fireAuth.getUserSession()));
+        this.fireAuth.getUserRefInFirebase(user).subscribe(() => {
+          this.user = this.fireAuth.getUserSession();
+          this.db.setup(this.user);
+        });
       }
     });
   }
