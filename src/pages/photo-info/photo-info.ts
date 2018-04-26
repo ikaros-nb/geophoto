@@ -43,7 +43,15 @@ export class PhotoInfoPage {
   deletePhoto() {
     this.firePhoto
       .deletePhotoInStorage(this.photo)
-      .then(() => this.firePhoto.deletePhotoInFirebase())
+      .then(() =>
+        this.firePhoto
+          .deletePhotoInFirebase(this.photo)
+          .then(() => {
+            alert('Photo deleted!');
+            this.navCtrl.pop();
+          })
+          .catch(error => console.log('error', error))
+      )
       .catch(error => console.log('error', error));
   }
 

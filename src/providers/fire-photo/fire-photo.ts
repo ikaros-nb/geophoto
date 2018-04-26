@@ -71,7 +71,20 @@ export class FirePhotoProvider {
     return photoRef.delete();
   }
 
-  public deletePhotoInFirebase() {}
+  public deletePhotoInFirebase(photo: Photo) {
+    const photoRef = firebase
+      .database()
+      .ref(`photos`)
+      .orderByChild(`name`)
+      .equalTo(photo.name)
+      .once('value', snapshot => {
+        let updates = {};
+        snapshot.forEach(child => (updates[child.key] = null));
+        snapshot.ref.update(updates);
+      });
+
+    return photoRef;
+  }
 
   public getPhotoMetadataInFirebase(photo: Photo) {
     const photoRef = firebase
