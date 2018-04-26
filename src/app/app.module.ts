@@ -16,6 +16,7 @@ import { RegisterPage } from "../pages/register/register";
 import { AccountPage } from "./../pages/account/account";
 import { AccountInfoPage } from "../pages/account-info/account-info";
 import { AccountPhotosPage } from "../pages/account-photos/account-photos";
+import { AccountLikesPage } from "../pages/account-likes/account-likes";
 import { PhotoInfoPage } from "../pages/photo-info/photo-info";
 
 import { ToastHelper } from "../helpers/toast";
@@ -32,6 +33,7 @@ import { DatabaseProvider } from '../providers/database/database';
     AccountPage,
     AccountInfoPage,
     AccountPhotosPage,
+    AccountLikesPage,
     PhotoInfoPage
   ],
   imports: [
@@ -50,6 +52,7 @@ import { DatabaseProvider } from '../providers/database/database';
     AccountPage,
     AccountInfoPage,
     AccountPhotosPage,
+    AccountLikesPage,
     PhotoInfoPage
   ],
   providers: [

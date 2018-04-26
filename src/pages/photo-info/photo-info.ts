@@ -51,6 +51,7 @@ export class PhotoInfoPage {
         this.firePhoto
           .deletePhotoInFirebase(this.photo)
           .then(() => {
+            this.db.removeFavPhoto(this.photo);
             alert('Photo deleted!');
             this.navCtrl.pop();
           })

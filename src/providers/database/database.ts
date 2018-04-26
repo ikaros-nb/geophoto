@@ -22,7 +22,7 @@ export class DatabaseProvider {
     let like = this.db
       .get(photo.name)
       .then(favPhoto => favPhoto)
-      .catch(error => console.log('error', error));
+      .catch(error => console.error('error', error));
 
     return Observable.fromPromise(like);
   }
@@ -30,16 +30,32 @@ export class DatabaseProvider {
   public toFavPhoto(photo: Photo) {
     let like = this.db
       .get(photo.name)
-      .then(favPhoto => {
-        return this.db.remove(favPhoto);
-      })
+      .then(favPhoto => this.db.remove(favPhoto))
       .catch(error => {
         this.db
           .put({ _id: photo.name, photo })
           .then(result => console.log('result', result))
-          .catch(error => console.log('error', error));
+          .catch(error => console.error('error', error));
       });
 
     return Observable.fromPromise(like);
+  }
+
+  public removeFavPhoto(photo: Photo) {
+    let like = this.db
+      .get(photo.name)
+      .then(favPhoto => this.db.remove(favPhoto))
+      .catch(error => console.error('error', error));
+
+    return Observable.fromPromise(like);
+  }
+
+  public listFavPhoto() {
+    let likes = this.db
+      .allDocs({ include_docs: true })
+      .then(result => result.rows)
+      .catch(error => console.error('error', error));
+
+    return Observable.fromPromise(likes);
   }
 }
