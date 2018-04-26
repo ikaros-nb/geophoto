@@ -70,4 +70,19 @@ export class FirePhotoProvider {
 
     return photoRef.getMetadata();
   }
+
+  public updatePhotoMetadataInFirebase(photo: Photo) {
+    const photoRef = firebase
+      .storage()
+      .ref(`photos/${photo.user.uid}/${photo.name}`);
+
+    let newMetadata = {
+      customMetadata: {
+        title: photo.metadata.title == '' ? null : photo.metadata.title,
+        location: photo.metadata.location == '' ? null : photo.metadata.location
+      }
+    };
+
+    return photoRef.updateMetadata(newMetadata);
+  }
 }

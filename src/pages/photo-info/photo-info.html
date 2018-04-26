@@ -14,6 +14,34 @@
 
     <img src="{{photo.pictureURL}}">
 
+    <ion-row *ngIf="!input">
+      <ion-col>
+        <ion-item>
+          <ion-label>{{photo.metadata?.title}}</ion-label>
+        </ion-item>
+        <button ion-button *ngIf="user.uid" (click)="showInput()">
+          <ion-icon name="create"></ion-icon>
+          Update
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="input">
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="photo.metadata.title"></ion-input>
+        </ion-item>
+        <button ion-button (click)="updateMetadata()">
+          <ion-icon name="create"></ion-icon>
+          Validate
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>{{photo.metadata?.location}}</ion-col>
+    </ion-row>
+
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
