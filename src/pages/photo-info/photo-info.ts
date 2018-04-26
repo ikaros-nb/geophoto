@@ -21,7 +21,6 @@ export class PhotoInfoPage {
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider
   ) {
-    this.user = this.fireAuth.getUserSession();
     this.photo = this.navParams.get('photo');
     this.firePhoto
       .getPhotoMetadataInFirebase(this.photo)
@@ -30,6 +29,7 @@ export class PhotoInfoPage {
 
   ionViewDidEnter() {
     this.menuCtrl.swipeEnable(false);
+    this.user = this.fireAuth.getUserSession();
   }
 
   ionViewWillLeave() {

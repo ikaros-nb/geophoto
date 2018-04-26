@@ -19,7 +19,7 @@
         <ion-item>
           <ion-label>{{photo.metadata?.title}}</ion-label>
         </ion-item>
-        <button ion-button *ngIf="user.uid" (click)="showInput()">
+        <button ion-button *ngIf="user.uid == photo.user.uid" (click)="showInput()">
           <ion-icon name="create"></ion-icon>
           Update
         </button>
@@ -39,7 +39,11 @@
     </ion-row>
 
     <ion-row>
-      <ion-col>{{photo.metadata?.location}}</ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>{{photo.metadata?.location}}</ion-label>
+        </ion-item>
+      </ion-col>
     </ion-row>
 
     <ion-row>

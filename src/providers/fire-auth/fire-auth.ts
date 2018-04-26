@@ -29,6 +29,7 @@ export class FireAuthProvider {
 
   public logout() {
     this.afAuth.auth.signOut();
+    this.userSession = {} as User;
   }
 
   public getAuthState() {
@@ -44,7 +45,6 @@ export class FireAuthProvider {
         this.userSession.pseudo = data.val().pseudo;
         this.userSession.email = data.val().email;
         this.userSession.avatarURL = data.val().avatarURL;
-        return this.userSession;
       });
 
     return Observable.fromPromise(userRef);
@@ -63,9 +63,5 @@ export class FireAuthProvider {
 
   public getUserSession(): User {
     return this.userSession;
-  }
-
-  public setUserSession(user: User): void {
-    this.userSession = user;
   }
 }
