@@ -37,19 +37,16 @@
       </ion-buttons>
     </ion-item>
 
-    <ion-item *ngIf="!input">
-      <ion-label>{{photo.metadata?.title}}</ion-label>
-    </ion-item>
+    <div *ngIf="!input" class="photo-info">
+      <p>
+        <b>{{photo.metadata?.title}}</b>
+      </p>
+      <p class="photo-location">{{photo.metadata?.location}}</p>
+      <p>{{photo.metadata?.description}}</p>
+    </div>
+
     <ion-item *ngIf="input">
       <ion-input [(ngModel)]="photo.metadata.title"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>{{photo.metadata?.location}}</ion-label>
-    </ion-item>
-
-    <ion-item *ngIf="!input">
-      <ion-label>{{photo.metadata?.description}}</ion-label>
     </ion-item>
     <ion-item *ngIf="input">
       <ion-textarea [(ngModel)]="photo.metadata.description"></ion-textarea>

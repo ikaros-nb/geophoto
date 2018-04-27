@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 import { Camera } from "@ionic-native/camera";
 import { Geolocation } from "@ionic-native/geolocation";
+import { NativeGeocoder } from "@ionic-native/native-geocoder";
 
 import { MyApp } from "./app.component";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
@@ -66,6 +67,7 @@ import { DatabaseProvider } from '../providers/database/database';
     ToastHelper,
     Camera,
     Geolocation,
+    NativeGeocoder,
     AngularFireDatabase,
     FireAuthProvider,
     FirePhotoProvider,

@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import {
+  NativeGeocoder,
+  NativeGeocoderReverseResult
+} from '@ionic-native/native-geocoder';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
+import { ToastHelper } from '../../helpers/toast';
+import { User } from '../../models/user';
 import { Metadata } from './../../models/metadata';
 
 @Component({
@@ -11,28 +17,57 @@ import { Metadata } from './../../models/metadata';
   templateUrl: 'add-photo.html'
 })
 export class AddPhotoPage {
+  user = {} as User;
   metadata = {} as Metadata;
+  canTakePicture: boolean;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private menuCtrl: MenuController,
     private camera: Camera,
     private geolocation: Geolocation,
+    private nativeGeocoder: NativeGeocoder,
     private fireAuth: FireAuthProvider,
-    private firePhoto: FirePhotoProvider
+    private firePhoto: FirePhotoProvider,
+    private toast: ToastHelper
   ) {}
 
-  ionViewDidLoad() {
-    this.metadata.location = 'Paris, FR';
+  ionViewDidEnter() {
+    this.menuCtrl.swipeEnable(false);
+    this.user = this.fireAuth.getUserSession();
+    this.getPosition();
+  }
+
+  ionViewWillLeave() {
+    this.menuCtrl.swipeEnable(true);
+  }
+
+  getPosition() {
+    const options = { enableHighAccuracy: true };
     this.geolocation
-      .getCurrentPosition()
-      .then(resp => {
-        this.metadata.latitude = resp.coords.latitude.toString();
-        this.metadata.longitude = resp.coords.longitude.toString();
+      .getCurrentPosition(options)
+      .then((position: Geoposition) => {
+        this.metadata.latitude = position.coords.latitude.toString();
+        this.metadata.longitude = position.coords.longitude.toString();
+        this.getLocation(position);
       })
       .catch(error => {
-        console.log('Error getting location', error);
+        alert('Error getting position ' + error);
       });
+  }
+
+  getLocation(position: Geoposition) {
+    this.nativeGeocoder
+      .reverseGeocode(position.coords.latitude, position.coords.longitude)
+      .then((location: NativeGeocoderReverseResult) => {
+        //alert(JSON.stringify(location));
+        this.metadata.location = `${location[0].locality}, ${
+          location[0].countryName
+        }`;
+        this.canTakePicture = true;
+      })
+      .catch(error => alert('Error getting location ' + error));
   }
 
   takePicture() {
@@ -47,15 +82,16 @@ export class AddPhotoPage {
       targetHeight: 720
     };
 
-    this.camera
-      .getPicture(options)
-      .then(picture =>
-        this.firePhoto.addPhotoInFirebase(
-          this.fireAuth.getUserSession(),
-          picture,
-          this.metadata
-        )
-      )
-      .catch(error => console.log('error', error));
+    if (this.metadata.title && this.metadata.description) {
+      this.camera
+        .getPicture(options)
+        .then(picture => {
+          this.firePhoto.addPhotoInFirebase(this.user, picture, this.metadata);
+          this.navCtrl.pop();
+        })
+        .catch(error => console.log('error', error));
+    } else {
+      this.toast.display(`Title and description must not be empty.`);
+    }
   }
 }

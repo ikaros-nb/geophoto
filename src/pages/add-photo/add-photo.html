@@ -1,6 +1,6 @@
 <ion-content padding>
-  <button ion-button clear color="light" menuToggle>
-    <ion-icon name="menu"></ion-icon>
+  <button ion-button clear navPop color="light">
+    <ion-icon name="arrow-round-back"></ion-icon>
   </button>
 
   <ion-item>
@@ -8,7 +8,7 @@
     <ion-input type="text" class="input-color" [(ngModel)]="metadata.title"></ion-input>
   </ion-item>
 
-  <ion-item>
+  <!--ion-item>
     <ion-label floating color="light">Latitude</ion-label>
     <ion-input type="text" class="input-color" disabled [(ngModel)]="metadata.latitude"></ion-input>
   </ion-item>
@@ -16,7 +16,7 @@
   <ion-item>
     <ion-label floating color="light">Longitude</ion-label>
     <ion-input type="text" class="input-color" disabled [(ngModel)]="metadata.longitude"></ion-input>
-  </ion-item>
+  </ion-item-->
 
   <ion-item>
     <ion-label floating color="light">Location</ion-label>
@@ -28,8 +28,13 @@
     <ion-textarea type="text" class="metadata-description" [(ngModel)]="metadata.description"></ion-textarea>
   </ion-item>
 
-  <button ion-button block color="danger" icon-left class="take-picture-button" (click)="takePicture()">
+  <button ion-button block color="danger" icon-left *ngIf="!canTakePicture" class="take-picture-button" (click)="getPosition()">
+    <ion-icon name="compass"></ion-icon>
+    Get location
+  </button>
+
+  <button ion-button block color="danger" icon-left *ngIf="canTakePicture" class="take-picture-button" (click)="takePicture()">
     <ion-icon name="camera"></ion-icon>
-    Register
+    Take picture
   </button>
 </ion-content>
