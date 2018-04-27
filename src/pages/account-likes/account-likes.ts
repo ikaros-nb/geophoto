@@ -18,16 +18,18 @@ export class AccountLikesPage {
   ) {}
 
   ionViewDidEnter() {
-    this.db.listFavPhoto().subscribe(likes => {
-      this.photos = [];
-      likes.forEach(like => {
-        this.photos.push(like.doc.photo);
-      });
-      this.photos.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
+    this.db.listFavPhoto().subscribe(likes => this.setLikes(likes));
+  }
+
+  setLikes(likes) {
+    this.photos = [];
+    likes.forEach(like => {
+      this.photos.push(like.doc.photo);
     });
+    this.photos.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   }
 
   goToPhotoInfo(photo) {

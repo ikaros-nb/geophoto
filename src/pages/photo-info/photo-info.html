@@ -14,21 +14,23 @@
 
     <img src="{{photo.pictureURL}}">
 
-    <ion-item>
-      <ion-buttons end>
-        <button ion-button outline small color="primary" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="showInput()">
+    <ion-item *ngIf="user.uid == photo.user.uid">
+      <ion-buttons end *ngIf="!input">
+        <button ion-button outline small color="primary" icon-left (click)="showInput()">
           <ion-icon name="create"></ion-icon>
           EDIT
         </button>
-        <button ion-button outline small color="danger" icon-left *ngIf="user.uid == photo.user.uid && !input" (click)="deletePhoto()">
+        <button ion-button outline small color="danger" icon-left (click)="deletePhoto()">
           <ion-icon name="close"></ion-icon>
           DELETE
         </button>
-        <button ion-button outline small color="secondary" icon-left *ngIf="input" (click)="updateMetadata()">
+      </ion-buttons>
+      <ion-buttons end *ngIf="input">
+        <button ion-button outline small color="secondary" icon-left (click)="updateMetadata()">
           <ion-icon name="checkmark"></ion-icon>
           UPDATE
         </button>
-        <button ion-button outline small color="danger" icon-left *ngIf="input" (click)="showInput()">
+        <button ion-button outline small color="danger" icon-left (click)="showInput()">
           <ion-icon name="close"></ion-icon>
           CANCEL
         </button>

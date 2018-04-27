@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { PhotoInfoPage } from './../photo-info/photo-info';
+import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
 import { Photo } from '../../models/photo';
 
@@ -15,10 +16,11 @@ export class AccountPhotosPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider
   ) {
     this.photos = this.firePhoto
-      .listbyUserFromFirebase()
+      .listbyUserFromFirebase(this.fireAuth.getUserSession())
       .valueChanges()
       .map(photos =>
         photos.sort(

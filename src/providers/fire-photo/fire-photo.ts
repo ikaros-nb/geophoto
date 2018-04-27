@@ -1,21 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import firebase from 'firebase';
-import { FireAuthProvider } from './../fire-auth/fire-auth';
-import { User } from '../../models/user';
+import { User } from './../../models/user';
 import { Photo } from '../../models/photo';
 
 @Injectable()
 export class FirePhotoProvider {
-  user = {} as User;
   photosRef: AngularFireList<Photo>;
 
-  constructor(
-    private fireAuth: FireAuthProvider,
-    private afDB: AngularFireDatabase
-  ) {
-    this.user = this.fireAuth.getUserSession();
-  }
+  constructor(private afDB: AngularFireDatabase) {}
 
   public listAllFromFirebase() {
     return (this.photosRef = this.afDB.list(`photos`, ref =>
@@ -23,18 +16,18 @@ export class FirePhotoProvider {
     ));
   }
 
-  public listbyUserFromFirebase() {
+  public listbyUserFromFirebase(user: User) {
     return (this.photosRef = this.afDB.list(`photos`, ref =>
-      ref.orderByChild(`user/pseudo`).equalTo(this.user.pseudo)
+      ref.orderByChild(`user/pseudo`).equalTo(user.pseudo)
     ));
   }
 
-  public addPhotoInFirebase(picture: string) {
+  public addPhotoInFirebase(user: User, picture: string) {
     const timestamp = new Date().getTime();
-    const pictureName = `photo-${this.user.uid}-${timestamp}.jpg`;
+    const pictureName = `photo-${user.uid}-${timestamp}.jpg`;
     const photoRef = firebase
       .storage()
-      .ref(`photos/${this.user.uid}/${pictureName}`);
+      .ref(`photos/${user.uid}/${pictureName}`);
 
     photoRef
       .putString(picture, 'base64', { contentType: 'image/jpeg' })
@@ -55,9 +48,9 @@ export class FirePhotoProvider {
             pictureURL: savedPicture.downloadURL,
             createdAt: savedPicture.metadata.timeCreated,
             user: {
-              uid: this.user.uid,
-              pseudo: this.fireAuth.getUserSession().pseudo,
-              avatarURL: this.fireAuth.getUserSession().avatarURL
+              uid: user.uid,
+              pseudo: user.pseudo,
+              avatarURL: user.avatarURL
             }
           });
       });

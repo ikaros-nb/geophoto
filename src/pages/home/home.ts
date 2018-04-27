@@ -62,7 +62,7 @@ export class HomePage {
 
     this.camera
       .getPicture(options)
-      .then(picture => this.firePhoto.addPhotoInFirebase(picture))
+      .then(picture => this.firePhoto.addPhotoInFirebase(this.user, picture))
       .catch(error => console.log('error', error));
   }
 }
