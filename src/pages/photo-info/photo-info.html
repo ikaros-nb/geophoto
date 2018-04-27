@@ -48,6 +48,13 @@
       <ion-label>{{photo.metadata?.location}}</ion-label>
     </ion-item>
 
+    <ion-item *ngIf="!input">
+      <ion-label>{{photo.metadata?.description}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="input">
+      <ion-textarea [(ngModel)]="photo.metadata.description"></ion-textarea>
+    </ion-item>
+
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small color="{{like ? 'secondary' : 'primary'}}" (click)="favorites()">

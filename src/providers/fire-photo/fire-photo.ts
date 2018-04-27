@@ -3,6 +3,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import firebase from 'firebase';
 import { User } from './../../models/user';
 import { Photo } from '../../models/photo';
+import { Metadata } from './../../models/metadata';
 
 @Injectable()
 export class FirePhotoProvider {
@@ -22,7 +23,7 @@ export class FirePhotoProvider {
     ));
   }
 
-  public addPhotoInFirebase(user: User, picture: string) {
+  public addPhotoInFirebase(user: User, picture: string, metadata: Metadata) {
     const timestamp = new Date().getTime();
     const pictureName = `photo-${user.uid}-${timestamp}.jpg`;
     const photoRef = firebase
@@ -32,13 +33,16 @@ export class FirePhotoProvider {
     photoRef
       .putString(picture, 'base64', { contentType: 'image/jpeg' })
       .then(savedPicture => {
-        let metadata = {
+        let newMetadata = {
           customMetadata: {
-            title: 'My super capture!',
-            location: 'Yosemite, CA, USA'
+            title: metadata.title,
+            latitude: metadata.latitude,
+            longitude: metadata.longitude,
+            location: metadata.location,
+            description: metadata.description
           }
         };
-        photoRef.updateMetadata(metadata);
+        photoRef.updateMetadata(newMetadata);
 
         firebase
           .database()
@@ -95,7 +99,8 @@ export class FirePhotoProvider {
     let newMetadata = {
       customMetadata: {
         title: photo.metadata.title == '' ? null : photo.metadata.title,
-        location: photo.metadata.location == '' ? null : photo.metadata.location
+        location: photo.metadata.location == '' ? null : photo.metadata.location,
+        description: photo.metadata.description == '' ? null : photo.metadata.description
       }
     };
 

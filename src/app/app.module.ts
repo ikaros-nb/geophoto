@@ -7,6 +7,7 @@ import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 import { Camera } from "@ionic-native/camera";
+import { Geolocation } from "@ionic-native/geolocation";
 
 import { MyApp } from "./app.component";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
@@ -18,6 +19,7 @@ import { AccountInfoPage } from "../pages/account-info/account-info";
 import { AccountPhotosPage } from "../pages/account-photos/account-photos";
 import { AccountLikesPage } from "../pages/account-likes/account-likes";
 import { PhotoInfoPage } from "../pages/photo-info/photo-info";
+import { AddPhotoPage } from "../pages/add-photo/add-photo";
 
 import { ToastHelper } from "../helpers/toast";
 import { FireAuthProvider } from "../providers/fire-auth/fire-auth";
@@ -34,7 +36,8 @@ import { DatabaseProvider } from '../providers/database/database';
     AccountInfoPage,
     AccountPhotosPage,
     AccountLikesPage,
-    PhotoInfoPage
+    PhotoInfoPage,
+    AddPhotoPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import { DatabaseProvider } from '../providers/database/database';
     AccountInfoPage,
     AccountPhotosPage,
     AccountLikesPage,
-    PhotoInfoPage
+    PhotoInfoPage,
+    AddPhotoPage
   ],
   providers: [
     StatusBar,
@@ -61,6 +65,7 @@ import { DatabaseProvider } from '../providers/database/database';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ToastHelper,
     Camera,
+    Geolocation,
     AngularFireDatabase,
     FireAuthProvider,
     FirePhotoProvider,

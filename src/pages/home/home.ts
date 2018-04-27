@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, FabContainer } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PhotoInfoPage } from '../photo-info/photo-info';
+import { AddPhotoPage } from '../add-photo/add-photo';
 import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
 import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
 import { DatabaseProvider } from './../../providers/database/database';
@@ -22,8 +22,7 @@ export class HomePage {
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
-    private db: DatabaseProvider,
-    private camera: Camera
+    private db: DatabaseProvider
   ) {
     this.photos = this.firePhoto
       .listAllFromFirebase()
@@ -50,23 +49,8 @@ export class HomePage {
     this.navCtrl.push(PhotoInfoPage, { photo });
   }
 
-  takePicture(fab: FabContainer) {
+  addPhotoPage(fab: FabContainer) {
     fab.close();
-
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      allowEdit: false,
-      targetWidth: 1280,
-      targetHeight: 720
-    };
-
-    this.camera
-      .getPicture(options)
-      .then(picture => this.firePhoto.addPhotoInFirebase(this.user, picture))
-      .catch(error => console.log('error', error));
+    this.navCtrl.push(AddPhotoPage);
   }
 }

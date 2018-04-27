@@ -1,0 +1,24 @@
+page-add-photo {
+  ion-content {
+    background: linear-gradient(to bottom, #1565c0, #42a5f5);
+
+    .item-md,
+    .item-ios {
+      background: none;
+      padding: 0 16px;
+    }
+
+    .input-color {
+      color: white;
+    }
+
+    .metadata-description .text-input {
+      height: 100px;
+      color: white;
+    }
+
+    .take-picture-button {
+      margin-top: 40px;
+    }
+  }
+}
