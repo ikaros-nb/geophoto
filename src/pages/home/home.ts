@@ -38,6 +38,10 @@ export class HomePage {
           this.user = this.fireAuth.getUserSession();
           this.db.setup(this.user);
         });
+      } else {
+        let visitor = {} as User;
+        visitor.uid = 'visitor';
+        this.db.setup(visitor);
       }
     });
   }

@@ -22,7 +22,7 @@ export class DatabaseProvider {
     let like = this.db
       .get(photo.name)
       .then(favPhoto => favPhoto)
-      .catch(error => error);
+      .catch(error => null);
 
     return Observable.fromPromise(like);
   }

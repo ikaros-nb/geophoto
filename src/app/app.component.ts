@@ -6,6 +6,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from './../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { AccountPage } from '../pages/account/account';
+import { AccountLikesPage } from '../pages/account-likes/account-likes';
 import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
 import { ToastHelper } from '../helpers/toast';
 import { User } from '../models/user';
@@ -78,7 +79,8 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: HomePage },
         { title: 'Login', component: LoginPage },
-        { title: 'Register', component: RegisterPage }
+        { title: 'Register', component: RegisterPage },
+        { title: 'My likes', component: AccountLikesPage }
       ];
     } else {
       this.pages = [
