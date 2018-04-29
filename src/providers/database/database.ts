@@ -3,6 +3,7 @@ import PouchDB from 'pouchdb';
 import { User } from '../../models/user';
 import { Photo } from './../../models/photo';
 import { Observable } from 'rxjs/Observable';
+import image2base64 from 'image-to-base64';
 
 @Injectable()
 export class DatabaseProvider {
@@ -32,10 +33,15 @@ export class DatabaseProvider {
       .get(photo.name)
       .then(favPhoto => this.db.remove(favPhoto))
       .catch(error => {
-        this.db
-          .put({ _id: photo.name, photo })
-          .then(result => console.log('result', result))
-          .catch(error => console.error('error', error));
+        image2base64(photo.pictureURL)
+          .then(response => {
+            photo.pictureURL = `data:image/jpeg;base64,${response}`;
+            this.db
+              .put({ _id: photo.name, photo })
+              .then(result => console.log('result', result))
+              .catch(error => console.error('error', error));
+          })
+          .catch(error => console.log(error));
       });
 
     return Observable.fromPromise(like);
