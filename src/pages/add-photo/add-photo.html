@@ -28,7 +28,7 @@
     <ion-textarea type="text" class="metadata-description" [(ngModel)]="metadata.description"></ion-textarea>
   </ion-item>
 
-  <button ion-button block color="danger" icon-left *ngIf="!canTakePicture" class="take-picture-button" (click)="getPosition()">
+  <button ion-button block color="danger" icon-left *ngIf="!canTakePicture" class="take-picture-button" (click)="checkLocation()">
     <ion-icon name="compass"></ion-icon>
     Get location
   </button>

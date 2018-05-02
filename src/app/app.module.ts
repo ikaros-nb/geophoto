@@ -9,6 +9,8 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/dat
 import { Camera } from "@ionic-native/camera";
 import { Geolocation } from "@ionic-native/geolocation";
 import { NativeGeocoder } from "@ionic-native/native-geocoder";
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { MyApp } from "./app.component";
 import { FIREBASE_CONFIG } from "./app.firebase.config";
@@ -66,6 +68,8 @@ import { DatabaseProvider } from '../providers/database/database';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ToastHelper,
     Camera,
+    Diagnostic,
+    LocationAccuracy,
     Geolocation,
     NativeGeocoder,
     AngularFireDatabase,

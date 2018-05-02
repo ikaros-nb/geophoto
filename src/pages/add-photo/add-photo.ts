@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import {
   NativeGeocoder,
@@ -26,6 +28,8 @@ export class AddPhotoPage {
     public navParams: NavParams,
     private menuCtrl: MenuController,
     private camera: Camera,
+    private diagnostic: Diagnostic,
+    private locationAccuracy: LocationAccuracy,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private fireAuth: FireAuthProvider,
@@ -36,11 +40,47 @@ export class AddPhotoPage {
   ionViewDidEnter() {
     this.menuCtrl.swipeEnable(false);
     this.user = this.fireAuth.getUserSession();
-    this.getPosition();
+    this.checkLocation();
   }
 
   ionViewWillLeave() {
     this.menuCtrl.swipeEnable(true);
+  }
+
+  checkLocation() {
+    this.diagnostic
+      .isGpsLocationEnabled()
+      .then(enabled => {
+        this.toast.display(
+          `GPS location is ${enabled ? 'enabled' : 'disabled'}`
+        );
+        if (enabled) this.getPosition();
+        else this.requestLocation();
+      })
+      .catch(error =>
+        alert('The following error occurred: ' + JSON.parse(error))
+      );
+  }
+
+  requestLocation() {
+    this.locationAccuracy.canRequest().then(canRequest => {
+      if (canRequest) {
+        this.locationAccuracy
+          .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+          .then(() => this.getPosition())
+          .catch(error => {
+            if (
+              confirm(
+                `Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?`
+              )
+            ) {
+              this.diagnostic.switchToLocationSettings();
+            } else {
+              this.toast.display(`You must enable GPS location to continue.`);
+            }
+          });
+      }
+    });
   }
 
   getPosition() {
