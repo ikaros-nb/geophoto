@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
-import { User } from '../../models/user';
-import { Photo } from './../../models/photo';
+import { User } from '@models/user';
+import { Photo } from '@models/photo';
 import { Observable } from 'rxjs/Observable';
 import image2base64 from 'image-to-base64';
 

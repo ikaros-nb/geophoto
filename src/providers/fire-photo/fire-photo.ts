@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import firebase from 'firebase';
-import { User } from './../../models/user';
-import { Photo } from '../../models/photo';
-import { Metadata } from './../../models/metadata';
+import { User } from '@models/user';
+import { Photo } from '@models/photo';
+import { Metadata } from '@models/metadata';
 
 @Injectable()
 export class FirePhotoProvider {

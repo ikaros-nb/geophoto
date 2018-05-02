@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { User } from './../../models/user';
-import { HomePage } from '../home/home';
-import { RegisterPage } from '../register/register';
-import { ToastHelper } from '../../helpers/toast';
-import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
+import { User } from '@models/user';
+import { HomePage } from '@pages/home/home';
+import { RegisterPage } from '@pages/register/register';
+import { ToastHelper } from '@helpers/toast';
+import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
 
 @Component({
   selector: 'page-login',

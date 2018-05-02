@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DatabaseProvider } from '../../providers/database/database';
-import { Photo } from '../../models/photo';
-import { PhotoInfoPage } from '../photo-info/photo-info';
+import { DatabaseProvider } from '@providers/database/database';
+import { Photo } from '@models/photo';
+import { PhotoInfoPage } from '@pages/photo-info/photo-info';
 
 @Component({
   selector: 'page-account-likes',

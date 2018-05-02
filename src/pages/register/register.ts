@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { User } from '../../models/user';
-import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
-import { HomePage } from '../home/home';
-import { ToastHelper } from '../../helpers/toast';
+import { User } from '@models/user';
+import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
+import { HomePage } from '@pages/home/home';
+import { ToastHelper } from '@helpers/toast';
 
 @Component({
   selector: 'page-register',

@@ -12,22 +12,22 @@ import { NativeGeocoder } from "@ionic-native/native-geocoder";
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
-import { MyApp } from "./app.component";
-import { FIREBASE_CONFIG } from "./app.firebase.config";
-import { HomePage } from "../pages/home/home";
-import { LoginPage } from "../pages/login/login";
-import { RegisterPage } from "../pages/register/register";
-import { AccountPage } from "./../pages/account/account";
-import { AccountInfoPage } from "../pages/account-info/account-info";
-import { AccountPhotosPage } from "../pages/account-photos/account-photos";
-import { AccountLikesPage } from "../pages/account-likes/account-likes";
-import { PhotoInfoPage } from "../pages/photo-info/photo-info";
-import { AddPhotoPage } from "../pages/add-photo/add-photo";
+import { MyApp } from "@app/app.component";
+import { FIREBASE_CONFIG } from "@app/app.firebase.config";
+import { HomePage } from "@pages/home/home";
+import { LoginPage } from "@pages/login/login";
+import { RegisterPage } from "@pages/register/register";
+import { AccountPage } from "@pages/account/account";
+import { AccountInfoPage } from "@pages/account-info/account-info";
+import { AccountPhotosPage } from "@pages/account-photos/account-photos";
+import { AccountLikesPage } from "@pages/account-likes/account-likes";
+import { PhotoInfoPage } from "@pages/photo-info/photo-info";
+import { AddPhotoPage } from "@pages/add-photo/add-photo";
 
-import { ToastHelper } from "../helpers/toast";
-import { FireAuthProvider } from "../providers/fire-auth/fire-auth";
-import { FirePhotoProvider } from '../providers/fire-photo/fire-photo';
-import { DatabaseProvider } from '../providers/database/database';
+import { ToastHelper } from "@helpers/toast";
+import { FireAuthProvider } from "@providers/fire-auth/fire-auth";
+import { FirePhotoProvider } from '@providers/fire-photo/fire-photo';
+import { DatabaseProvider } from '@providers/database/database';
 
 @NgModule({
   declarations: [

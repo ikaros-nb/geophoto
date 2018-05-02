@@ -1,5 +1,5 @@
-import { User } from './user';
-import { Metadata } from './metadata';
+import { User } from '@models/user';
+import { Metadata } from '@models/metadata';
 
 export interface Photo {
   name: string;

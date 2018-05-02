@@ -1,12 +1,13 @@
 {
-  "name": "GeoPhoto",
-  "version": "0.0.1",
+  "name": "geophoto",
+  "version": "1.0.0",
   "author": "Nicolas Bouème",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
+    "start": "ionic serve --no-open",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
@@ -74,5 +75,9 @@
     "platforms": [
       "android"
     ]
+  },
+  "config": {
+    "ionic_source_map_type": "source-map",
+    "ionic_webpack": "./config/webpack.config.js"
   }
 }

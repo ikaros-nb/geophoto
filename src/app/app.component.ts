@@ -2,14 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HomePage } from '../pages/home/home';
-import { LoginPage } from './../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { AccountPage } from '../pages/account/account';
-import { AccountLikesPage } from '../pages/account-likes/account-likes';
-import { FireAuthProvider } from '../providers/fire-auth/fire-auth';
-import { ToastHelper } from '../helpers/toast';
-import { User } from '../models/user';
+import { HomePage } from '@pages/home/home';
+import { LoginPage } from '@pages/login/login';
+import { RegisterPage } from '@pages/register/register';
+import { AccountPage } from '@pages/account/account';
+import { AccountLikesPage } from '@pages/account-likes/account-likes';
+import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
+import { ToastHelper } from '@helpers/toast';
+import { User } from '@models/user';
 
 @Component({
   templateUrl: 'app.html'

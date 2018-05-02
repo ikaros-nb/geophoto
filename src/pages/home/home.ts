@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, FabContainer } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { PhotoInfoPage } from '../photo-info/photo-info';
-import { AddPhotoPage } from '../add-photo/add-photo';
-import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
-import { FirePhotoProvider } from '../../providers/fire-photo/fire-photo';
-import { DatabaseProvider } from './../../providers/database/database';
-import { User } from '../../models/user';
-import { Photo } from '../../models/photo';
+import { PhotoInfoPage } from '@pages/photo-info/photo-info';
+import { AddPhotoPage } from '@pages/add-photo/add-photo';
+import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
+import { FirePhotoProvider } from '@providers/fire-photo/fire-photo';
+import { DatabaseProvider } from '@providers/database/database';
+import { User } from '@models/user';
+import { Photo } from '@models/photo';
 
 @Component({
   selector: 'page-home',

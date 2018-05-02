@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { User } from '../../models/user';
-import { FireAuthProvider } from '../../providers/fire-auth/fire-auth';
+import { User } from '@models/user';
+import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
 
 @Component({
   selector: 'page-account-info',
