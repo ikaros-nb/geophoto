@@ -19,7 +19,8 @@
       "@models/*": ["models/*"],
       "@pages/*": ["pages/*"],
       "@providers/*": ["providers/*"],
-      "@theme/*": ["theme/*"]
+      "@theme/*": ["theme/*"],
+      "@validators/*": ["validators/*"]
     }
   },
   "include": ["src/**/*.ts"],

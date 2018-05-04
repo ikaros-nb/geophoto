@@ -14,7 +14,8 @@ if (env === 'prod' || env === 'dev') {
     '@models': path.resolve('./src/models/'),
     '@pages': path.resolve('./src/pages/'),
     '@providers': path.resolve('./src/providers/'),
-    '@theme': path.resolve('./src/theme/')
+    '@theme': path.resolve('./src/theme/'),
+    '@validators': path.resolve('./src/validators/')
   };
 } else {
   useDefaultConfig[env] = useDefaultConfig.dev;
@@ -26,7 +27,8 @@ if (env === 'prod' || env === 'dev') {
     '@models': path.resolve('./src/models/'),
     '@pages': path.resolve('./src/pages/'),
     '@providers': path.resolve('./src/providers/'),
-    '@theme': path.resolve('./src/theme/')
+    '@theme': path.resolve('./src/theme/'),
+    '@validators': path.resolve('./src/validators/')
   };
 }
 

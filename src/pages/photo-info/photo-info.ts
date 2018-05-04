@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { Photo } from '@models/photo';
 import { User } from '@models/user';
-import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
-import { FirePhotoProvider } from '@providers/fire-photo/fire-photo';
-import { DatabaseProvider } from '@providers/database/database';
+import { FireAuthProvider } from '@providers/fire-auth';
+import { FirePhotoProvider } from '@providers/fire-photo';
+import { DatabaseProvider } from '@providers/database';
 
 @Component({
   selector: 'page-photo-info',

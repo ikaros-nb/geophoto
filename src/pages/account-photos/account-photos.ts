@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { PhotoInfoPage } from '@pages/photo-info/photo-info';
-import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
-import { FirePhotoProvider } from '@providers/fire-photo/fire-photo';
+import { FireAuthProvider } from '@providers/fire-auth';
+import { FirePhotoProvider } from '@providers/fire-photo';
 import { Photo } from '@models/photo';
 
 @Component({

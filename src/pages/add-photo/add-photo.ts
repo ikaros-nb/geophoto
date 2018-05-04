@@ -8,8 +8,8 @@ import {
   NativeGeocoder,
   NativeGeocoderReverseResult
 } from '@ionic-native/native-geocoder';
-import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
-import { FirePhotoProvider } from '@providers/fire-photo/fire-photo';
+import { FireAuthProvider } from '@providers/fire-auth';
+import { FirePhotoProvider } from '@providers/fire-photo';
 import { ToastHelper } from '@helpers/toast';
 import { User } from '@models/user';
 import { Metadata } from '@models/metadata';

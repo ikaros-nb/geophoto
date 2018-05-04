@@ -25,9 +25,9 @@ import { PhotoInfoPage } from "@pages/photo-info/photo-info";
 import { AddPhotoPage } from "@pages/add-photo/add-photo";
 
 import { ToastHelper } from "@helpers/toast";
-import { FireAuthProvider } from "@providers/fire-auth/fire-auth";
-import { FirePhotoProvider } from '@providers/fire-photo/fire-photo';
-import { DatabaseProvider } from '@providers/database/database';
+import { FireAuthProvider } from "@providers/fire-auth";
+import { FirePhotoProvider } from '@providers/fire-photo';
+import { DatabaseProvider } from '@providers/database';
 
 @NgModule({
   declarations: [

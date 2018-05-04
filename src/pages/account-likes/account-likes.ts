@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DatabaseProvider } from '@providers/database/database';
+import { DatabaseProvider } from '@providers/database';
 import { Photo } from '@models/photo';
 import { PhotoInfoPage } from '@pages/photo-info/photo-info';
 

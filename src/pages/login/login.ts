@@ -4,7 +4,7 @@ import { User } from '@models/user';
 import { HomePage } from '@pages/home/home';
 import { RegisterPage } from '@pages/register/register';
 import { ToastHelper } from '@helpers/toast';
-import { FireAuthProvider } from '@providers/fire-auth/fire-auth';
+import { FireAuthProvider } from '@providers/fire-auth';
 
 @Component({
   selector: 'page-login',
