@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content fullscreen padding>
+<ion-content fullscreen>
   <h2>Likes</h2>
 
   <ion-card *ngFor="let photo of photos">
@@ -23,15 +23,15 @@
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
-          <ion-icon name="thumbs-up"></ion-icon>
-          <div>12 Likes</div>
+          <ion-icon name="star-outline"></ion-icon>
+          <div>Favorites</div>
         </button>
       </ion-col>
 
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
+          <div>Comments</div>
         </button>
       </ion-col>
     </ion-row>

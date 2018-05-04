@@ -58,7 +58,7 @@ export class AddPhotoPage {
         else this.requestLocation();
       })
       .catch(error =>
-        alert('The following error occurred: ' + JSON.parse(error))
+        alert('The following error occurred: ' + JSON.stringify(error))
       );
   }
 

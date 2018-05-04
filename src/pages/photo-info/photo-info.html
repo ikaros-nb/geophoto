@@ -2,7 +2,7 @@
   <ion-navbar transparent color="primary"></ion-navbar>
 </ion-header>
 
-<ion-content fullscreen padding>
+<ion-content fullscreen>
   <ion-card>
     <ion-item>
       <ion-avatar item-start>
@@ -55,15 +55,15 @@
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small color="{{like ? 'secondary' : 'primary'}}" (click)="favorites()">
-          <ion-icon name="thumbs-up"></ion-icon>
-          <div>12 Likes</div>
+          <ion-icon name="{{like ? 'star' : 'star-outline'}}"></ion-icon>
+          <div>Favorites</div>
         </button>
       </ion-col>
 
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
+          <div>Comments</div>
         </button>
       </ion-col>
     </ion-row>

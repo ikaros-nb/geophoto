@@ -13,7 +13,7 @@
                 <ion-icon *ngIf="p.title == 'Login'" name="log-in"></ion-icon>
                 <ion-icon *ngIf="p.title == 'Register'" name="person-add"></ion-icon>
                 <ion-icon *ngIf="p.title == 'Account'" name="person"></ion-icon>
-                <ion-icon *ngIf="p.title == 'My likes'" name="thumbs-up"></ion-icon>
+                <ion-icon *ngIf="p.title == 'My likes'" name="star"></ion-icon>
                 {{p.title}}
             </button>
             <button menuClose *ngIf="user.pseudo" ion-item class="menu-button" (click)="logout()">

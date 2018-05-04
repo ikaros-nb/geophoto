@@ -1,5 +1,16 @@
+ion-header {
+  background: rgba(0, 0, 0, 0.2);
+}
+
 ion-content {
   background: linear-gradient(to bottom, #1565c0, #42a5f5);
+
+  .card-md,
+  .card-ios {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
 
   .item-md,
   .item-ios {
@@ -38,5 +49,35 @@ ion-content {
         margin: 0 10px;
       }
     }
+  }
+
+  .photo-info {
+    margin: 13px 0;
+    padding: 0 16px;
+
+    .photo-location {
+      color: #666;
+    }
+  }
+
+  .item-md,
+  .item-ios {
+    background: none;
+    padding: 0 16px;
+  }
+
+  .input-color {
+    color: white;
+  }
+
+  .register-button,
+  .login-button,
+  .take-picture-button {
+    margin-top: 40px;
+  }
+
+  .metadata-description .text-input {
+    height: 100px;
+    color: white;
   }
 }
