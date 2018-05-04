@@ -1,8 +1,12 @@
-<ion-content padding>
-  <button ion-button clear color="light" menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
+<ion-header no-border>
+  <ion-navbar transparent>
+    <button ion-button clear color="light" menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
 
+<ion-content fullscreen padding>
   <h2>Account</h2>
   <p>Pseudo: {{user.pseudo}}</p>
   <p>Email: {{user.email}}</p>
