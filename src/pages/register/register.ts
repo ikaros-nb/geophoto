@@ -24,10 +24,10 @@ export class RegisterPage {
     private toast: ToastHelper,
     private formBuilder: FormBuilder
   ) {
-    this.initRegisterFrom();
+    this.initRegisterForm();
   }
 
-  initRegisterFrom() {
+  initRegisterForm() {
     this.registerForm = this.formBuilder.group({
       pseudo: [
         '',

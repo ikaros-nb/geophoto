@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Photo } from '@models/photo';
+import { Metadata } from '@models/metadata';
 import { User } from '@models/user';
+import { ToastHelper } from '@helpers/toast';
 import { FireAuthProvider } from '@providers/fire-auth';
 import { FirePhotoProvider } from '@providers/fire-photo';
 import { DatabaseProvider } from '@providers/database';
@@ -15,6 +18,7 @@ export class PhotoInfoPage {
   user = {} as User;
   input: boolean;
   like: boolean;
+  metadataForm: FormGroup;
 
   constructor(
     public navCtrl: NavController,
@@ -22,7 +26,9 @@ export class PhotoInfoPage {
     private menuCtrl: MenuController,
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
-    private db: DatabaseProvider
+    private db: DatabaseProvider,
+    private toast: ToastHelper,
+    private formBuilder: FormBuilder
   ) {
     this.photo = this.navParams.get('photo');
     this.firePhoto
@@ -40,8 +46,19 @@ export class PhotoInfoPage {
     this.menuCtrl.swipeEnable(true);
   }
 
+  initMetadataForm(metadata: Metadata) {
+    this.metadataForm = this.formBuilder.group({
+      title: [metadata.title, Validators.compose([Validators.required])],
+      description: [
+        metadata.description,
+        Validators.compose([Validators.required])
+      ]
+    });
+  }
+
   showInput() {
     this.input = !this.input;
+    this.initMetadataForm(this.photo.metadata);
   }
 
   deletePhoto() {
@@ -52,7 +69,7 @@ export class PhotoInfoPage {
           .deletePhotoInFirebase(this.photo)
           .then(() => {
             this.db.removeFavPhoto(this.photo);
-            alert('Photo deleted!');
+            this.toast.display(`Photo deleted!`);
             this.navCtrl.pop();
           })
           .catch(error => console.log('error', error))
@@ -61,10 +78,20 @@ export class PhotoInfoPage {
   }
 
   updateMetadata() {
-    this.firePhoto
-      .updatePhotoMetadataInFirebase(this.photo)
-      .then(() => (this.input = false))
-      .catch(error => console.log('error', error));
+    let formValue = this.metadataForm.value;
+    if (this.metadataForm.valid) {
+      this.photo.metadata.title = formValue.title;
+      this.photo.metadata.description = formValue.description;
+
+      this.firePhoto
+        .updatePhotoMetadataInFirebase(this.photo)
+        .then(() => (this.input = false))
+        .catch(error => this.toast.display(`Error while trying to update!`));
+    } else {
+      if (!formValue.title || !formValue.description) {
+        this.toast.display(`Title and description must not be empty.`);
+      }
+    }
   }
 
   getFavPhoto() {

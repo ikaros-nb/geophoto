@@ -11,6 +11,7 @@ import {
 import { FireAuthProvider } from '@providers/fire-auth';
 import { FirePhotoProvider } from '@providers/fire-photo';
 import { ToastHelper } from '@helpers/toast';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user';
 import { Metadata } from '@models/metadata';
 
@@ -22,6 +23,7 @@ export class AddPhotoPage {
   user = {} as User;
   metadata = {} as Metadata;
   canTakePicture: boolean;
+  photoForm: FormGroup;
 
   constructor(
     public navCtrl: NavController,
@@ -34,8 +36,11 @@ export class AddPhotoPage {
     private nativeGeocoder: NativeGeocoder,
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
-    private toast: ToastHelper
-  ) {}
+    private toast: ToastHelper,
+    private formBuilder: FormBuilder
+  ) {
+    this.initPhotoForm();
+  }
 
   ionViewDidEnter() {
     this.menuCtrl.swipeEnable(false);
@@ -45,6 +50,16 @@ export class AddPhotoPage {
 
   ionViewWillLeave() {
     this.menuCtrl.swipeEnable(true);
+  }
+
+  initPhotoForm() {
+    this.photoForm = this.formBuilder.group({
+      title: ['', Validators.compose([Validators.required])],
+      latitude: ['', Validators.compose([Validators.required])],
+      longitude: ['', Validators.compose([Validators.required])],
+      location: ['', Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.required])]
+    });
   }
 
   checkLocation() {
@@ -88,8 +103,12 @@ export class AddPhotoPage {
     this.geolocation
       .getCurrentPosition(options)
       .then((position: Geoposition) => {
-        this.metadata.latitude = position.coords.latitude.toString();
-        this.metadata.longitude = position.coords.longitude.toString();
+        this.photoForm.controls.latitude.setValue(
+          position.coords.latitude.toString()
+        );
+        this.photoForm.controls.longitude.setValue(
+          position.coords.longitude.toString()
+        );
         this.getLocation(position);
       })
       .catch(error => {
@@ -102,9 +121,9 @@ export class AddPhotoPage {
       .reverseGeocode(position.coords.latitude, position.coords.longitude)
       .then((location: NativeGeocoderReverseResult) => {
         //alert(JSON.stringify(location));
-        this.metadata.location = `${location[0].locality}, ${
-          location[0].countryName
-        }`;
+        this.photoForm.controls.location.setValue(
+          `${location[0].locality}, ${location[0].countryName}`
+        );
         this.canTakePicture = true;
       })
       .catch(error => alert('Error getting location ' + error));
@@ -114,24 +133,34 @@ export class AddPhotoPage {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      allowEdit: false,
+      allowEdit: true,
+      encodingType: this.camera.EncodingType.JPEG,
       targetWidth: 1280,
-      targetHeight: 720
+      targetHeight: 720,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: false
     };
 
-    if (this.metadata.title && this.metadata.description) {
+    let formValue = this.photoForm.value;
+    if (this.photoForm.valid) {
       this.camera
         .getPicture(options)
         .then(picture => {
+          this.metadata.title = formValue.title;
+          this.metadata.latitude = formValue.latitude;
+          this.metadata.longitude = formValue.longitude;
+          this.metadata.location = formValue.location;
+          this.metadata.description = formValue.description;
+
           this.firePhoto.addPhotoInFirebase(this.user, picture, this.metadata);
           this.navCtrl.pop();
         })
         .catch(error => console.log('error', error));
     } else {
-      this.toast.display(`Title and description must not be empty.`);
+      if (!formValue.title || !formValue.description) {
+        this.toast.display(`Title and description must not be empty.`);
+      }
     }
   }
 }

@@ -8,21 +8,23 @@
 
 <ion-content fullscreen padding>
 
-  <ion-item>
-    <ion-label floating color="light">Email address</ion-label>
-    <ion-input type="text" class="input-color" [(ngModel)]="user.email"></ion-input>
-  </ion-item>
+  <form [formGroup]="loginForm">
+    <ion-item>
+      <ion-label floating color="light">Email address</ion-label>
+      <ion-input formControlName="email" type="email" class="input-color"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating color="light">Password</ion-label>
-    <ion-input type="password" class="input-color" [(ngModel)]="user.password"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label floating color="light">Password</ion-label>
+      <ion-input formControlName="password" type="password" class="input-color"></ion-input>
+    </ion-item>
 
-  <button ion-button block color="secondary" class="login-button" (click)="login()">Login</button>
+    <button ion-button block color="secondary" class="login-button" (click)="login()">Login</button>
 
-  <ion-item no-lines>
-    <p ion-text color="light">Need an account ?
-      <a ion-text color="danger" (click)="register()">Register here</a>
-    </p>
-  </ion-item>
+    <ion-item no-lines>
+      <p ion-text color="light">Need an account ?
+        <a ion-text color="danger" (click)="register()">Register here</a>
+      </p>
+    </ion-item>
+  </form>
 </ion-content>

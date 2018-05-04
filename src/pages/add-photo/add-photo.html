@@ -3,38 +3,41 @@
 </ion-header>
 
 <ion-content fullscreen padding>
-  <ion-item>
-    <ion-label floating color="light">Title</ion-label>
-    <ion-input type="text" class="input-color" [(ngModel)]="metadata.title"></ion-input>
-  </ion-item>
 
-  <!--ion-item>
-    <ion-label floating color="light">Latitude</ion-label>
-    <ion-input type="text" class="input-color" disabled [(ngModel)]="metadata.latitude"></ion-input>
-  </ion-item>
+  <form [formGroup]="photoForm">
+    <ion-item>
+      <ion-label floating color="light">Title</ion-label>
+      <ion-input formControlName="title" type="text" class="input-color"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating color="light">Longitude</ion-label>
-    <ion-input type="text" class="input-color" disabled [(ngModel)]="metadata.longitude"></ion-input>
-  </ion-item-->
+    <!--ion-item>
+          <ion-label floating color="light">Latitude</ion-label>
+          <ion-input formControlName="latitude" type="text" class="input-color" disabled></ion-input>
+        </ion-item>
 
-  <ion-item>
-    <ion-label floating color="light">Location</ion-label>
-    <ion-input type="text" class="input-color" disabled [(ngModel)]="metadata.location"></ion-input>
-  </ion-item>
+        <ion-item>
+          <ion-label floating color="light">Longitude</ion-label>
+          <ion-input formControlName="longitude" type="text" class="input-color" disabled></ion-input>
+        </ion-item-->
 
-  <ion-item>
-    <ion-label floating color="light">Description</ion-label>
-    <ion-textarea type="text" class="metadata-description" [(ngModel)]="metadata.description"></ion-textarea>
-  </ion-item>
+    <ion-item>
+      <ion-label floating color="light">Location</ion-label>
+      <ion-input formControlName="location" type="text" class="input-color" disabled></ion-input>
+    </ion-item>
 
-  <button ion-button block color="danger" icon-left *ngIf="!canTakePicture" class="take-picture-button" (click)="checkLocation()">
-    <ion-icon name="compass"></ion-icon>
-    Get location
-  </button>
+    <ion-item>
+      <ion-label floating color="light">Description</ion-label>
+      <ion-textarea formControlName="description" type="text" class="metadata-description"></ion-textarea>
+    </ion-item>
 
-  <button ion-button block color="danger" icon-left *ngIf="canTakePicture" class="take-picture-button" (click)="takePicture()">
-    <ion-icon name="camera"></ion-icon>
-    Take picture
-  </button>
+    <button ion-button block color="danger" icon-left *ngIf="!canTakePicture" class="take-picture-button" (click)="checkLocation()">
+      <ion-icon name="compass"></ion-icon>
+      Get location
+    </button>
+
+    <button ion-button block color="danger" icon-left *ngIf="canTakePicture" class="take-picture-button" (click)="takePicture()">
+      <ion-icon name="camera"></ion-icon>
+      Take picture
+    </button>
+  </form>
 </ion-content>

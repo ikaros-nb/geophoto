@@ -45,12 +45,14 @@
       <p>{{photo.metadata?.description}}</p>
     </div>
 
-    <ion-item *ngIf="input">
-      <ion-input [(ngModel)]="photo.metadata.title"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="input">
-      <ion-textarea [(ngModel)]="photo.metadata.description"></ion-textarea>
-    </ion-item>
+    <form [formGroup]="metadataForm" *ngIf="input">
+      <ion-item>
+        <ion-input formControlName="title" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+    </form>
 
     <ion-row>
       <ion-col>
