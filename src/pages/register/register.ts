@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user';
 import { FireAuthProvider } from '@providers/fire-auth';
 import { HomePage } from '@pages/home/home';
 import { ToastHelper } from '@helpers/toast';
+import { EmailValidator } from '@validators/email';
+import { PasswordValidator } from '@validators/password';
 
 @Component({
   selector: 'page-register',
@@ -11,16 +14,68 @@ import { ToastHelper } from '@helpers/toast';
 })
 export class RegisterPage {
   user = {} as User;
+  registerForm: FormGroup;
+  isExistingUser: boolean;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
-    private toast: ToastHelper
-  ) {}
+    private toast: ToastHelper,
+    private formBuilder: FormBuilder
+  ) {
+    this.initRegisterFrom();
+  }
+
+  initRegisterFrom() {
+    this.registerForm = this.formBuilder.group({
+      pseudo: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(6)])
+      ],
+      email: [
+        '',
+        Validators.compose([Validators.required, EmailValidator.isValid])
+      ],
+      password: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(6)])
+      ],
+      confirmPassword: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(6),
+          PasswordValidator.equalToPassword
+        ])
+      ]
+    });
+
+    this.isExistingUser = false;
+    this.existingUser();
+  }
+
+  existingUser() {
+    this.registerForm.valueChanges.subscribe(registerForm => {
+      this.fireAuth
+        .existingPseudo(registerForm.pseudo)
+        .then(user => {
+          if (user.val()) {
+            this.toast.display(`This pseudo you entered is already in use.`);
+            this.isExistingUser = true;
+          } else this.isExistingUser = false;
+        })
+        .catch(error => console.log(error));
+    });
+  }
 
   register() {
-    if (this.user.pseudo && this.user.email && this.user.password) {
+    let formValue = this.registerForm.value;
+    if (this.registerForm.valid) {
+      this.user.pseudo = formValue.pseudo;
+      this.user.email = formValue.email;
+      this.user.password = formValue.password;
+
       this.fireAuth
         .register(this.user)
         .then(user => {
@@ -30,21 +85,20 @@ export class RegisterPage {
             .login(this.user)
             .then(user => this.navCtrl.setRoot(HomePage))
             .catch(error => {
-              this.user.password = null;
+              this.registerForm.reset();
               this.toast.display(
                 `There is no user corresponding to this credentials. The user may have been deleted.`
               );
             });
         })
         .catch(error => {
-          this.user.password = null;
           this.toast.display(error.message);
         });
     } else {
-      this.user.pseudo = null;
-      this.user.email = null;
-      this.user.password = null;
-      this.toast.display(`Pseudo, email and password must not be empty.`);
+      if (!formValue.pseudo || !formValue.email || !formValue.password) {
+        this.registerForm.reset();
+        this.toast.display(`Pseudo, email and password must not be empty.`);
+      } else this.toast.display(`Pseudo, email and password must be valid.`);
     }
   }
 }

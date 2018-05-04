@@ -20,6 +20,15 @@ export class FireAuthProvider {
     );
   }
 
+  public existingPseudo(pseudo: string) {
+    return firebase
+      .database()
+      .ref(`users`)
+      .orderByChild(`pseudo`)
+      .equalTo(pseudo)
+      .once('value', snapshot => snapshot);
+  }
+
   public login(user: User) {
     return this.afAuth.auth.signInWithEmailAndPassword(
       user.email,

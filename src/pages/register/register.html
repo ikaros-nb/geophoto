@@ -3,20 +3,27 @@
     <ion-icon name="menu"></ion-icon>
   </button>
 
-  <ion-item>
-    <ion-label floating color="light">Pseudo</ion-label>
-    <ion-input type="text" class="input-color" [(ngModel)]="user.pseudo"></ion-input>
-  </ion-item>
+  <form [formGroup]="registerForm">
+    <ion-item>
+      <ion-label stacked color="light">Pseudo</ion-label>
+      <ion-input formControlName="pseudo" type="text" class="input-color" placeholder="Your pseudo"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating color="light">Email address</ion-label>
-    <ion-input type="text" class="input-color" [(ngModel)]="user.email"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label stacked color="light">Email address</ion-label>
+      <ion-input formControlName="email" type="email" class="input-color" placeholder="Your email address"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating color="light">Password</ion-label>
-    <ion-input type="password" class="input-color" [(ngModel)]="user.password"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label stacked color="light">Password</ion-label>
+      <ion-input formControlName="password" type="password" class="input-color" placeholder="Your password"></ion-input>
+    </ion-item>
 
-  <button ion-button block color="danger" class="register-button" (click)="register()">Register</button>
+    <ion-item>
+      <ion-label stacked color="light">Confirm password</ion-label>
+      <ion-input formControlName="confirmPassword" type="password" class="input-color" placeholder="Confirm your password"></ion-input>
+    </ion-item>
+
+    <button ion-button block color="danger" type="submit" class="register-button" [disabled]="isExistingUser" (click)="register()">Register</button>
+  </form>
 </ion-content>
