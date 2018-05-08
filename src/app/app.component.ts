@@ -80,7 +80,7 @@ export class MyApp {
         { title: 'Home', component: HomePage },
         { title: 'Login', component: LoginPage },
         { title: 'Register', component: RegisterPage },
-        { title: 'My likes', component: AccountLikesPage }
+        { title: 'My favorites', component: AccountLikesPage }
       ];
     } else {
       this.pages = [
