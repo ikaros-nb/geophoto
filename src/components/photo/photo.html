@@ -1,0 +1,27 @@
+<ion-card>
+  <ion-item>
+    <ion-avatar item-start>
+      <img src="{{photo.user.avatarURL}}">
+    </ion-avatar>
+    <h2>{{photo.user.pseudo}}</h2>
+    <p>{{photo.createdAt | date : 'MMMM d, y - HH:mm:s'}}</p>
+  </ion-item>
+
+  <img src="{{photo.pictureURL}}" (click)="goToPhotoInfo()">
+
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-left clear small color="{{like ? 'secondary' : 'primary'}}" (click)="favorites()">
+        <ion-icon name="{{like ? 'star' : 'star-outline'}}"></ion-icon>
+        <div>Favorites</div>
+      </button>
+    </ion-col>
+
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>Comments</div>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-card>

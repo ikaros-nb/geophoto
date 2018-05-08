@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '@providers/database';
 import { Photo } from '@models/photo';
-import { PhotoInfoPage } from '@pages/photo-info/photo-info';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'page-account-likes',
@@ -10,6 +10,7 @@ import { PhotoInfoPage } from '@pages/photo-info/photo-info';
 })
 export class AccountLikesPage {
   photos: Array<Photo>;
+  photosSubscription: Subscription;
 
   constructor(
     public navCtrl: NavController,
@@ -18,21 +19,16 @@ export class AccountLikesPage {
   ) {}
 
   ionViewDidEnter() {
-    this.db.listFavPhoto().subscribe(likes => this.setLikes(likes));
-  }
-
-  setLikes(likes) {
-    this.photos = [];
-    likes.forEach(like => {
-      this.photos.push(like.doc.photo);
-    });
-    this.photos.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    this.db.listFavPhoto().subscribe();
+    this.photosSubscription = this.db.photosSubject.subscribe(
+      (photos: Array<Photo>) => {
+        console.log('init accountlikes', photos);
+        this.photos = photos;
+      }
     );
   }
 
-  goToPhotoInfo(photo) {
-    this.navCtrl.push(PhotoInfoPage, { photo });
+  ionViewDidLeave() {
+    this.photosSubscription.unsubscribe();
   }
 }

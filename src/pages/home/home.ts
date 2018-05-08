@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, FabContainer } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { PhotoInfoPage } from '@pages/photo-info/photo-info';
 import { AddPhotoPage } from '@pages/add-photo/add-photo';
 import { FireAuthProvider } from '@providers/fire-auth';
 import { FirePhotoProvider } from '@providers/fire-photo';
@@ -23,12 +22,7 @@ export class HomePage {
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
     private db: DatabaseProvider
-  ) {
-    this.photos = this.firePhoto
-      .listAllFromFirebase()
-      .valueChanges()
-      .map(photos => photos.reverse());
-  }
+  ) {}
 
   ionViewDidLoad() {
     this.fireAuth.getAuthState().subscribe(user => {
@@ -42,11 +36,12 @@ export class HomePage {
         visitor.uid = 'visitor';
         this.db.setup(visitor);
       }
-    });
-  }
 
-  goToPhotoInfo(photo) {
-    this.navCtrl.push(PhotoInfoPage, { photo });
+      this.photos = this.firePhoto
+        .listAllFromFirebase()
+        .valueChanges()
+        .map(photos => photos.reverse());
+    });
   }
 
   addPhotoPage(fab: FabContainer) {

@@ -23,6 +23,7 @@ import { AccountPhotosPage } from "@pages/account-photos/account-photos";
 import { AccountLikesPage } from "@pages/account-likes/account-likes";
 import { PhotoInfoPage } from "@pages/photo-info/photo-info";
 import { AddPhotoPage } from "@pages/add-photo/add-photo";
+import { PhotoComponent } from "@components/photo/photo";
 
 import { ToastHelper } from "@helpers/toast";
 import { FireAuthProvider } from "@providers/fire-auth";
@@ -40,7 +41,8 @@ import { DatabaseProvider } from '@providers/database';
     AccountPhotosPage,
     AccountLikesPage,
     PhotoInfoPage,
-    AddPhotoPage
+    AddPhotoPage,
+    PhotoComponent
   ],
   imports: [
     BrowserModule,

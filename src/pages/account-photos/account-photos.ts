@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { PhotoInfoPage } from '@pages/photo-info/photo-info';
 import { FireAuthProvider } from '@providers/fire-auth';
 import { FirePhotoProvider } from '@providers/fire-photo';
 import { Photo } from '@models/photo';
@@ -18,7 +17,9 @@ export class AccountPhotosPage {
     public navParams: NavParams,
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider
-  ) {
+  ) {}
+
+  ionViewDidEnter() {
     this.photos = this.firePhoto
       .listbyUserFromFirebase(this.fireAuth.getUserSession())
       .valueChanges()
@@ -28,12 +29,5 @@ export class AccountPhotosPage {
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         )
       );
-    /*.map(photos =>
-        photos.reverse().filter(photo => photo.user.uid == this.user.uid)
-      );*/
-  }
-
-  goToPhotoInfo(photo) {
-    this.navCtrl.push(PhotoInfoPage, { photo });
   }
 }

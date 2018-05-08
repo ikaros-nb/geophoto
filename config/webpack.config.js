@@ -9,6 +9,7 @@ if (env === 'prod' || env === 'dev') {
   useDefaultConfig[env].resolve.alias = {
     '@app': path.resolve('./src/app/'),
     '@assets': path.resolve('./src/assets/'),
+    '@components': path.resolve('./src/components/'),
     '@env': path.resolve(environmentPath()),
     '@helpers': path.resolve('./src/helpers/'),
     '@models': path.resolve('./src/models/'),
@@ -22,6 +23,7 @@ if (env === 'prod' || env === 'dev') {
   useDefaultConfig[env].resolve.alias = {
     '@app': path.resolve('./src/app/'),
     '@assets': path.resolve('./src/assets/'),
+    '@components': path.resolve('./src/components/'),
     '@env': path.resolve(environmentPath()),
     '@helpers': path.resolve('./src/helpers/'),
     '@models': path.resolve('./src/models/'),

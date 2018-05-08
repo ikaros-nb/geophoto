@@ -103,6 +103,6 @@ export class PhotoInfoPage {
 
   favorites() {
     this.like = !this.like;
-    this.db.toFavPhoto(this.photo).subscribe();
+    this.db.toFavPhoto(this.photo, this.navParams.get('index')).subscribe();
   }
 }

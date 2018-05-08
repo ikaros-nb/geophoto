@@ -14,6 +14,7 @@
     "paths": {
       "@app/*": ["app/*"],
       "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
       "@env": ["environments/environment"],
       "@helpers/*": ["helpers/*"],
       "@models/*": ["models/*"],

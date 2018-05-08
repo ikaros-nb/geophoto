@@ -18,31 +18,5 @@
     </ion-fab-list>
   </ion-fab>
 
-  <ion-card *ngFor="let photo of photos | async">
-    <ion-item>
-      <ion-avatar item-start>
-        <img src="{{photo.user.avatarURL}}">
-      </ion-avatar>
-      <h2>{{photo.user.pseudo}}</h2>
-      <p>{{photo.createdAt | date : 'MMMM d, y - HH:mm:s'}}</p>
-    </ion-item>
-
-    <img src="{{photo.pictureURL}}" (click)="goToPhotoInfo(photo)">
-
-    <ion-row>
-      <ion-col>
-        <button ion-button icon-left clear small>
-          <ion-icon name="star-outline"></ion-icon>
-          <div>Favorites</div>
-        </button>
-      </ion-col>
-
-      <ion-col>
-        <button ion-button icon-left clear small>
-          <ion-icon name="text"></ion-icon>
-          <div>Comments</div>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+  <photo-component *ngFor="let photo of photos | async; let i = index" [photo]="photo" [index]="i"></photo-component>
 </ion-content>
