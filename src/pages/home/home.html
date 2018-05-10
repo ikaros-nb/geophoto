@@ -18,5 +18,5 @@
     </ion-fab-list>
   </ion-fab>
 
-  <photo-component *ngFor="let photo of photos | async; let i = index" [photo]="photo" [index]="i"></photo-component>
+  <photo-component *ngFor="let photo of photos | async" [photo]="photo"></photo-component>
 </ion-content>

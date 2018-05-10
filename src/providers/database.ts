@@ -35,17 +35,22 @@ export class DatabaseProvider {
     return Observable.fromPromise(like);
   }
 
-  public toFavPhoto(photo: Photo, index: number) {
+  public toFavPhoto(photo: Photo) {
     let like = this.db
       .get(photo.name)
       .then(favPhoto => {
-        this.photos.splice(index, 1);
+        for (let i = 0; i < this.photos.length; i++) {
+          if (this.photos[i].name === photo.name) {
+            this.photos.splice(i, 1);
+            break;
+          }
+        }
         this.emitPhotosSubject();
         this.db.remove(favPhoto);
       })
       .catch(error => {
-        image2base64(`https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?w=640&ssl=1`)
-        //image2base64(photo.pictureURL)
+        // image2base64(`https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?w=640&ssl=1`)
+        image2base64(photo.pictureURL)
           .then(response => {
             photo.pictureURL = `data:image/jpeg;base64,${response}`;
             this.db

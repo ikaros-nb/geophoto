@@ -10,7 +10,6 @@ import { Photo } from '@models/photo';
 })
 export class PhotoComponent implements OnInit {
   @Input() photo: Photo;
-  @Input() index: number;
 
   like: boolean;
 
@@ -32,10 +31,10 @@ export class PhotoComponent implements OnInit {
 
   favorites() {
     this.like = !this.like;
-    this.db.toFavPhoto(this.photo, this.index).subscribe();
+    this.db.toFavPhoto(this.photo).subscribe();
   }
 
   goToPhotoInfo() {
-    this.navCtrl.push(PhotoInfoPage, { photo: this.photo, index: this.index });
+    this.navCtrl.push(PhotoInfoPage, { photo: this.photo });
   }
 }
