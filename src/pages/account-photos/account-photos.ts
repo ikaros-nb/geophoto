@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { FireAuthProvider } from '@providers/fire-auth';
 import { FirePhotoProvider } from '@providers/fire-photo';
+import { User } from '@models/user';
 import { Photo } from '@models/photo';
 
 @Component({
@@ -10,7 +11,9 @@ import { Photo } from '@models/photo';
   templateUrl: 'account-photos.html'
 })
 export class AccountPhotosPage {
-  photos: Observable<Photo[]>;
+  photos: Array<Photo>;
+  photosSubscription: Subscription;
+  user = {} as User;
 
   constructor(
     public navCtrl: NavController,
@@ -20,14 +23,12 @@ export class AccountPhotosPage {
   ) {}
 
   ionViewDidEnter() {
-    this.photos = this.firePhoto
-      .listbyUserFromFirebase(this.fireAuth.getUserSession())
-      .valueChanges()
-      .map(photos =>
-        photos.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
-      );
+    this.user = this.fireAuth.getUserSession();
+    this.firePhoto.listbyUserFromFirebase(this.user);
+    this.photosSubscription = this.firePhoto.byUserPhotosSubject.subscribe(
+      (photos: Array<Photo>) => {
+        this.photos = photos;
+      }
+    );
   }
 }

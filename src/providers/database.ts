@@ -66,11 +66,11 @@ export class DatabaseProvider {
         return this.db.remove(doc).then(result => false);
       })
       .catch(error => {
-        // return (
-        //   image2base64(
-        //     `https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?w=640&ssl=1`
-        //   )
-            return image2base64(photo.pictureURL)
+        return (
+          // image2base64(
+          //   `https://i2.wp.com/beebom.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg?w=640&ssl=1`
+          // )
+          image2base64(photo.pictureURL)
             .then(response => {
               photo.pictureURL = `data:image/jpeg;base64,${response}`;
               this.pushPhoto(photo);

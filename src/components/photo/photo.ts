@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { PhotoInfoPage } from '@pages/photo-info/photo-info';
 import { DatabaseProvider } from '@providers/database';
@@ -10,8 +10,7 @@ import { Photo } from '@models/photo';
 })
 export class PhotoComponent implements OnInit {
   @Input() photo: Photo;
-
-  like: boolean;
+  @Output() photoEvent: EventEmitter<Photo> = new EventEmitter<Photo>();
 
   constructor(public navCtrl: NavController, private db: DatabaseProvider) {}
 
@@ -21,13 +20,15 @@ export class PhotoComponent implements OnInit {
 
   getFavPhoto() {
     this.db.getFavPhoto(this.photo).subscribe(favPhoto => {
-      if (favPhoto) this.like = true;
-      else this.like = false;
+      if (favPhoto) this.photo.like = true;
+      else this.photo.like = false;
+      this.photoEvent.emit(this.photo);
     });
   }
 
   favorites() {
-    this.like = !this.like;
+    this.photo.like = !this.photo.like;
+    this.photoEvent.emit(this.photo);
     this.db.toFavPhoto(this.photo).subscribe();
   }
 

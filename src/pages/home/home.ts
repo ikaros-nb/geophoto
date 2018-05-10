@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, FabContainer } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { AddPhotoPage } from '@pages/add-photo/add-photo';
 import { FireAuthProvider } from '@providers/fire-auth';
 import { FirePhotoProvider } from '@providers/fire-photo';
@@ -13,7 +13,8 @@ import { Photo } from '@models/photo';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  photos: Observable<Photo[]>;
+  photos: Array<Photo>;
+  photosSubscription: Subscription;
   user = {} as User;
 
   constructor(
@@ -22,12 +23,7 @@ export class HomePage {
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
     private db: DatabaseProvider
-  ) {
-    this.photos = this.firePhoto
-      .listAllFromFirebase()
-      .valueChanges()
-      .map(photos => photos.reverse());
-  }
+  ) {}
 
   ionViewDidLoad() {
     this.fireAuth.getAuthState().subscribe(user => {
@@ -44,6 +40,15 @@ export class HomePage {
         this.db.listFavPhoto().subscribe();
       }
     });
+  }
+
+  ionViewDidEnter() {
+    this.firePhoto.listAllFromFirebase();
+    this.photosSubscription = this.firePhoto.allPhotosSubject.subscribe(
+      (photos: Array<Photo>) => {
+        this.photos = photos;
+      }
+    );
   }
 
   addPhotoPage(fab: FabContainer) {

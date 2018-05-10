@@ -7,4 +7,5 @@ export interface Photo {
   createdAt: string;
   user: User;
   metadata: Metadata;
+  like?: boolean;
 }

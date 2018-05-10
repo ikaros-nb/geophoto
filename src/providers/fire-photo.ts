@@ -4,23 +4,53 @@ import firebase from 'firebase';
 import { User } from '@models/user';
 import { Photo } from '@models/photo';
 import { Metadata } from '@models/metadata';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class FirePhotoProvider {
-  photosRef: AngularFireList<Photo>;
+  private photosRef: AngularFireList<Photo>;
+  private allPhotos: Array<Photo>;
+  public allPhotosSubject = new Subject<Photo[]>();
+  private byUserPhotos: Array<Photo>;
+  public byUserPhotosSubject = new Subject<Photo[]>();
 
   constructor(private afDB: AngularFireDatabase) {}
 
+  private emitAllPhotosSubject() {
+    this.allPhotosSubject.next(this.allPhotos.slice());
+  }
+
+  private emitByUserPhotosSubject() {
+    this.byUserPhotosSubject.next(this.byUserPhotos.slice());
+  }
+
   public listAllFromFirebase() {
-    return (this.photosRef = this.afDB.list(`photos`, ref =>
+    (this.photosRef = this.afDB.list(`photos`, ref =>
       ref.orderByChild(`createdAt`)
-    ));
+    ))
+      .valueChanges()
+      .map(photos => photos.reverse())
+      .subscribe(photos => {
+        this.allPhotos = photos;
+        this.emitAllPhotosSubject();
+      });
   }
 
   public listbyUserFromFirebase(user: User) {
-    return (this.photosRef = this.afDB.list(`photos`, ref =>
+    (this.photosRef = this.afDB.list(`photos`, ref =>
       ref.orderByChild(`user/pseudo`).equalTo(user.pseudo)
-    ));
+    ))
+      .valueChanges()
+      .map(photos =>
+        photos.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+      )
+      .subscribe(photos => {
+        this.byUserPhotos = photos;
+        this.emitByUserPhotosSubject();
+      });
   }
 
   public addPhotoInFirebase(user: User, picture: string, metadata: Metadata) {
@@ -99,8 +129,10 @@ export class FirePhotoProvider {
     let newMetadata = {
       customMetadata: {
         title: photo.metadata.title == '' ? null : photo.metadata.title,
-        location: photo.metadata.location == '' ? null : photo.metadata.location,
-        description: photo.metadata.description == '' ? null : photo.metadata.description
+        location:
+          photo.metadata.location == '' ? null : photo.metadata.location,
+        description:
+          photo.metadata.description == '' ? null : photo.metadata.description
       }
     };
 

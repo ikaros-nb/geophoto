@@ -11,8 +11,8 @@
 
   <ion-row>
     <ion-col>
-      <button ion-button icon-left clear small color="{{like ? 'secondary' : 'primary'}}" (click)="favorites()">
-        <ion-icon name="{{like ? 'star' : 'star-outline'}}"></ion-icon>
+      <button ion-button icon-left clear small color="{{photo?.like ? 'secondary' : 'primary'}}" (click)="favorites()">
+        <ion-icon name="{{photo?.like ? 'star' : 'star-outline'}}"></ion-icon>
         <div>Favorites</div>
       </button>
     </ion-col>

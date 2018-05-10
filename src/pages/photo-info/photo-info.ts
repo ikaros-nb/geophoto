@@ -62,19 +62,21 @@ export class PhotoInfoPage {
   }
 
   deletePhoto() {
-    this.firePhoto
-      .deletePhotoInStorage(this.photo)
-      .then(() =>
-        this.firePhoto
-          .deletePhotoInFirebase(this.photo)
-          .then(() => {
-            this.db.removeFavPhoto(this.photo);
-            this.toast.display(`Photo deleted!`);
-            this.navCtrl.pop();
-          })
-          .catch(error => console.log('error', error))
-      )
-      .catch(error => console.log('error', error));
+    if (confirm(`Are you sure to delete this photo?`)) {
+      this.firePhoto
+        .deletePhotoInStorage(this.photo)
+        .then(() =>
+          this.firePhoto
+            .deletePhotoInFirebase(this.photo)
+            .then(() => {
+              this.db.removeFavPhoto(this.photo);
+              this.toast.display(`Photo deleted!`);
+              this.navCtrl.pop();
+            })
+            .catch(error => console.log('error', error))
+        )
+        .catch(error => console.log('error', error));
+    }
   }
 
   updateMetadata() {
