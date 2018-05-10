@@ -23,9 +23,6 @@ export class PhotoComponent implements OnInit {
     this.db.getFavPhoto(this.photo).subscribe(favPhoto => {
       if (favPhoto) this.like = true;
       else this.like = false;
-
-      console.log('photo', this.photo);
-      console.log('like', this.like);
     });
   }
 

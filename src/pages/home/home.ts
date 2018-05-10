@@ -22,7 +22,12 @@ export class HomePage {
     private fireAuth: FireAuthProvider,
     private firePhoto: FirePhotoProvider,
     private db: DatabaseProvider
-  ) {}
+  ) {
+    this.photos = this.firePhoto
+      .listAllFromFirebase()
+      .valueChanges()
+      .map(photos => photos.reverse());
+  }
 
   ionViewDidLoad() {
     this.fireAuth.getAuthState().subscribe(user => {
@@ -30,17 +35,14 @@ export class HomePage {
         this.fireAuth.getUserRefInFirebase(user).subscribe(() => {
           this.user = this.fireAuth.getUserSession();
           this.db.setup(this.user);
+          this.db.listFavPhoto().subscribe();
         });
       } else {
         let visitor = {} as User;
         visitor.uid = 'visitor';
         this.db.setup(visitor);
+        this.db.listFavPhoto().subscribe();
       }
-
-      this.photos = this.firePhoto
-        .listAllFromFirebase()
-        .valueChanges()
-        .map(photos => photos.reverse());
     });
   }
 
