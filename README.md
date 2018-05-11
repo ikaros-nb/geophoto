@@ -15,6 +15,19 @@ sur [_OpenClassrooms_](https://www.openclassrooms.com).
 - Ionic
 - Firebase
 
+
+### Pré-requis
+
+- Java JDK
+- Node.js et npm
+- Cordova et Ionic
+- Android Studio
+- Android SDK tools et platform à mis à jour. Disponible via le SDK Manager de Android Studio
+- Xcode 7 ou plus
+- iOS 9
+- Un Apple ID gratuit ou un compte développeur Apple payant
+
+
 ### Fonctionnement
 
 Se positionner dans le dossier du projet, à sa racine.
@@ -32,19 +45,22 @@ Pour un déploiement sur un périphérique sans construction de l'exécutable de
 Se positionner dans le dossier du projet, à sa racine.
 
 Génération de l'apk :
-`ionic cordova build --release android`
+`ionic cordova build android --prod --release`
 
 Se déplacer dans le dossier de l'apk générée :
 `cd platforms/android/build/outputs/apk`
 
 Utiliser la commande suivante pour générer un keystore :
-`keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000`
+`keytool  -genkey  -v  -keystore  my-release-key.jks  -keyalg  RSA  -keysize 2048 -validity 10000 -alias  my-alias`
 
 Utiliser la commande suivante pour signer l'apk à l'aide du keystore précédemment généré :
-`jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore app-release-unsigned.apk alias_name`
+`jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.jks app-release-unsigned.apk my-alias`
 
 Finaliser le processus à l'aide de la commande suivante afin d'optimiser l'application :
-`zipalign -v 4 HelloWorld-release-unsigned.apk app-release-unsigned.apk`
+`zipalign -v 4 app-release-unsigned.apk app-release.apk`
+
+On peut ensuite vérifier que notre apk a bien été signée :
+`apksigner verify app-release.apk`
 
 Maintenant, nous avons le fichier `app-release.apk` prêt à être déployé sur le Play Store.
 
@@ -56,4 +72,4 @@ Pour la mise à jour de votre application, il faut au préalable modifier le fic
 
 ### Publication sur l'Apple Store
 
-Suivre la procédure via la documentation officielle de Ionic : [_iOS Publishing_](https://ionicframework.com/docs/v1/guide/publishing.html)
+Suivre la procédure via la documentation officielle de Ionic : [_iOS Devices_](https://ionicframework.com/docs/intro/deploying/)
