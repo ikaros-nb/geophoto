@@ -30,9 +30,22 @@ sur [_OpenClassrooms_](https://www.openclassrooms.com).
 
 ### Fonctionnement
 
+Créer le fichier `src/app/app.firebase.config.ts` et insérer la configuration suivante :
+
+```
+export const FIREBASE_CONFIG = {
+  apiKey: <YOUR_API_KEY>,
+  authDomain: <YOUR_AUTH_DOMAIN>,
+  databaseURL: <YOUR_DATABASE_URL>,
+  projectId: <YOUR_PROJECT_ID>,
+  storageBucket: <YOUR_STORAGE_BUCKET>,
+  messagingSenderId: <YOUR_MESSAGING_SENDER_ID>
+};
+```
+
 Se positionner dans le dossier du projet, à sa racine.
 
-Pour lancer l'application sur un navigateur Web, utiliser la commande suivante : 
+Pour lancer l'application sur un navigateur Web, utiliser la commande suivante :
 - `ionic serve` afin de lancer un serveur en ouvrant automatiquement une fenêtre dans le navigateur par défaut
 - `npm start` afin de lancer un serveur sans ouvrir de fenêtre et accéder à l'application manuellement via l'URL `http://localhost:8100/`
 

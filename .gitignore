@@ -33,5 +33,5 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 # Envrionment Variables
-**/environment.*
-!**/env.ts
+# **/environment.*
+# !**/env.ts
